@@ -31,12 +31,14 @@ Then the mysql database is created & configured.
 Each Dev Session:
 -----
 1. `cd ttr` (navigate to project folder on your machine)
-2. `vagrant up` (launch the vagrant vm)
-3. `vagrant ssh` (log in to the vagrant vm)
-4. `cd /vagrant` (navigate to the project folder on the vm)
-5. `rails s` (run the rails server on the vm)
-6. Open a web browser on your local machine pointed at `0.0.0.0:3000`
-7. To view the admin interface, go to `0.0.0.0:3000/admin` and login with `admin@example.com:password`
+2. `git pull` (pull latest changes from github)
+3. `vagrant up` (launch the vagrant vm)
+4. `vagrant ssh` (log in to the vagrant vm)
+5. `cd /vagrant` (navigate to the project folder on the vm)
+6. `bundle exec rake db:migrate` and/or `bundle exec rake db:seed` to run db changes/fixtures
+7. `rails s` (run the rails server on the vm)
+8. Open a web browser on your local machine pointed at `0.0.0.0:3000`
+9. To view the admin interface, go to `0.0.0.0:3000/admin` and login with `admin@example.com:password`
 
 or
 5. `steroids login` to log in to your AppGyver account
