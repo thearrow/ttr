@@ -1,12 +1,12 @@
-class ApiController < ApplicationController
+class RestaurantController < ApplicationController
 
-  #GET /api/restaurants
+  #GET /restaurant
   def index
     @restaurants = Restaurant.all
     render json: @restaurants
   end
 
-  #GET /api/restaurants/{id}
+  #GET /restaurant/{id}
   def show
     @restaurant = Restaurant.find(params[:id])
     render json: @restaurant

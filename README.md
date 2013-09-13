@@ -49,8 +49,12 @@ Connecting to Steroids
 5. Copy and paste the url (like `http://127.0.0.1:4567/__appgyver/connect/qrcode.html?qrCodeData=appgyver...`) to your local browser
 6. Replace the `appgyver=...` with `appgyver%3A%2F%2F%3Fips%3D%255B%2522{YOUR MACHINE'S IP ADDRESS}%2522%255D%26port%3D4567`
     where {YOUR MACHINE'S IP ADDRESS} is it's LAN IP like mine was 192.168.0.14
-7. Download the AppGyver Scanner app on your phone
-8. Scan the QR code displayed in step 6.
+7. Download the AppGyver Scanner app on your phone and scan the QR code displayed in step 6.
+
+
+In /mobileapp/app/models/restaurant.js the uri of the api needs to be updated to either your local machine's ip or the heroku address (later).
+
+
 
 Any changes you make to the local project files using your favorite editor are instantly shared with the vm.
 

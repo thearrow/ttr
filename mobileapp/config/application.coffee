@@ -18,7 +18,7 @@ steroids.config.name = "My New Application"
 #   - "http://localhost/index.html" - served from the device's web server.
 #   - "http://www.google.com - any external URL.
 
-steroids.config.location = "index.html"
+steroids.config.location = "http://localhost/views/restaurant/index.html"
 
 # -- Remote hosts: steroids.config.hosts --
 # Defines the hostnames that the application will capture. Requests by the Steroids app to a captured hostname will be served from localhost. Using the example below, the file at www/index.html would be served equivalently from both http://localhost/index.html and http://mobileapp.example.com/index.html.

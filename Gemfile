@@ -26,6 +26,9 @@ gem 'jbuilder', '~> 1.2'
 gem 'multi_json'
 gem 'oj'
 
+# Allow Cross-Origin Resource Sharing (CORS) for AJAX calls
+gem 'rack-cors', :require => 'rack/cors'
+
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false
