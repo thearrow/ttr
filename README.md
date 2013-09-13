@@ -28,7 +28,7 @@ Then the mysql database is created & configured.
 (Provisioning might take forever...and may appear to hang... go do something else and leave it be.)
 
 
-Each Dev Session:
+Each Dev Session
 -----
 1. `cd ttr` (navigate to project folder on your machine)
 2. `git pull` (pull latest changes from github)
@@ -40,8 +40,17 @@ Each Dev Session:
 8. Open a web browser on your local machine pointed at `0.0.0.0:3000`
 9. To view the admin interface, go to `0.0.0.0:3000/admin` and login with `admin@example.com:password`
 
-or
-5. `steroids login` to log in to your AppGyver account
+Connecting to Steroids
+-----
+1. Get into the vagrant vm
+2. `cd /vagrant/mobileapp`
+3. `steroids login` (only once)
+4. `steroids connect --debug`
+5. Copy and paste the url (like `http://127.0.0.1:4567/__appgyver/connect/qrcode.html?qrCodeData=appgyver...`) to your local browser
+6. Replace the `appgyver=...` with `appgyver%3A%2F%2F%3Fips%3D%255B%2522{YOUR MACHINE'S IP ADDRESS}%2522%255D%26port%3D4567`
+    where {YOUR MACHINE'S IP ADDRESS} is it's LAN IP like mine was 192.168.0.14
+7. Download the AppGyver Scanner app on your phone
+8. Scan the QR code displayed in step 6.
 
 Any changes you make to the local project files using your favorite editor are instantly shared with the vm.
 

@@ -1,5 +1,5 @@
 sudo apt-get update
-sudo apt-get -q -y install software-properties-common python-software-properties curl
+sudo apt-get -q -y install software-properties-common python-software-properties curl zip
 
 echo =========INSTALLING GIT=========
 sudo apt-get -q -y install git-core
