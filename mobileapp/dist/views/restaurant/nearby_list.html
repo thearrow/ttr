@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf8">
+  <title>Steroids App</title>
+
+  <link rel="stylesheet" href="/vendor/topcoat/css/topcoat-mobile-light.css" />
+  <link rel="stylesheet" href="/stylesheets/application.css" />
+  <link rel="stylesheet" href="/stylesheets/restaurant.css" />
+
+  <script src="/appgyver/cordova.js"></script>
+  <script src="/components/steroids-js/steroids.js"></script>
+
+
+  <script src="/components/angular/angular.min.js"></script>
+
+  <script src="/components/underscore/underscore-min.js"></script>
+  <script src="/components/restangular/dist/restangular.min.js"></script>
+
+  <script src="/vendor/hammerjs/hammer.min.js"></script>
+  <script src="/vendor/angular-hammer/angular-hammer.js"></script>
+
+  <script src="/models/models.js"></script>
+
+  <script src="/controllers/application.js"></script>
+  <script src="/controllers/restaurant.js"></script>
+</head>
+<body>
+
+
+  <div ng-app="restaurantApp">
+
+  <div ng-controller="NearbyListCtrl">
+    <div class="spinner" ng-show="loading"></div>
+    <div class="topcoat-list__container">
+
+      <ul class="topcoat-list">
+        <!-- order is reversed created timestamp -->
+        <li class="topcoat-list__item" hm-tap="open(restaurant.id)" ng-repeat="restaurant in restaurants | orderBy: '-createddate'">
+          {{ restaurant.name }} - {{ restaurant.description }}
+        </li>
+      </ul>
+
+    </div>
+
+  </div>
+
+</div>
+
+</body>
+</html>

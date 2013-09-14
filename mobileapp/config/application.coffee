@@ -8,7 +8,7 @@
 #
 # to create a cloud-deployed build of your app.
 
-steroids.config.name = "My New Application"
+steroids.config.name = "Tasting Table Restaurants"
 
 # -- Location: steroids.config.location --
 # Defines the location of the HTML document that Steroids will load when your app starts.
@@ -17,8 +17,7 @@ steroids.config.name = "My New Application"
 #   - "index.html" - served with File URL, like in PhoneGap.
 #   - "http://localhost/index.html" - served from the device's web server.
 #   - "http://www.google.com - any external URL.
-
-steroids.config.location = "http://localhost/views/restaurant/index.html"
+# steroids.config.location = "http://localhost/views/restaurant/index.html"
 
 # -- Remote hosts: steroids.config.hosts --
 # Defines the hostnames that the application will capture. Requests by the Steroids app to a captured hostname will be served from localhost. Using the example below, the file at www/index.html would be served equivalently from both http://localhost/index.html and http://mobileapp.example.com/index.html.
@@ -33,7 +32,7 @@ steroids.config.location = "http://localhost/views/restaurant/index.html"
 # Enabling tabs will override steroids.config.location (which is inteded for single WebView apps, i.e. PhoneGap's default behavior) and show the first tab of the tab array on startup.
 # Default: false
 #
-# steroids.config.tabBar.enabled = true
+steroids.config.tabBar.enabled = true
 
 # -- Defining tabs via the tab array --
 # An array of tab objects that specify which tabs are shown on app startup.
@@ -46,18 +45,23 @@ steroids.config.location = "http://localhost/views/restaurant/index.html"
 #   - "http://localhost/index.html" - served from the device's web server.
 #   - "http://www.google.com - any external URL.
 #
-# steroids.config.tabBar.tabs = [
-#   {
-#     title: "Index"
-#     icon: "icons/pill@2x.png"
-#     location: "http://localhost/index.html"
-#   },
-#   {
-#     title: "Internet"
-#     icon: "icons/telescope@2x.png"
-#     location: "http://www.google.com"
-#   }
-# ]
+steroids.config.tabBar.tabs = [
+   {
+     title: "Nearby"
+     icon: "icons/nearby@2x.png"
+     location: "http://localhost/views/restaurant/nearby_list.html"
+   },
+   {
+     title: "Search"
+     icon: "icons/search@2x.png"
+     location: "http://localhost/views/restaurant/search.html"
+   },
+   {
+     title: "Internet"
+     icon: "icons/telescope@2x.png"
+     location: "http://www.google.com"
+   }
+]
 
 # -- Selected tab background image --
 # Used to set an indicator image for the selected tab on iOS (can be bigger than the tab area).
@@ -75,13 +79,13 @@ steroids.config.location = "http://localhost/views/restaurant/index.html"
 # steroids.config.tabBar.tabTitleShadowColor = ""
 # steroids.config.tabBar.selectedTabTintColor = ""
 
-steroids.config.navigationBar.tintColor = "#00aeef"
-steroids.config.navigationBar.titleColor = "#ffffff"
-steroids.config.navigationBar.titleShadowColor = "#000000"
+# steroids.config.navigationBar.tintColor = "#00aeef"
+# steroids.config.navigationBar.titleColor = "#ffffff"
+# steroids.config.navigationBar.titleShadowColor = "#000000"
 
-steroids.config.navigationBar.buttonTintColor = "#363636"
-steroids.config.navigationBar.buttonTitleColor = "#ffffff"
-steroids.config.navigationBar.buttonShadowColor = "#000000"
+# steroids.config.navigationBar.buttonTintColor = "#363636"
+# steroids.config.navigationBar.buttonTitleColor = "#ffffff"
+# steroids.config.navigationBar.buttonShadowColor = "#000000"
 
 #
 # Loading screen color is used by Android only, on the background of loading.png

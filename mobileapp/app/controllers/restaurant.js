@@ -1,9 +1,7 @@
 var restaurantApp = angular.module('restaurantApp', ['RestaurantModel', 'hmTouchevents']);
 
-
-// Index: http://localhost/views/restaurant/index.html
-
-restaurantApp.controller('IndexCtrl', function ($scope, RestaurantRestangular) {
+// Nearby List: http://localhost/views/restaurant/nearby_list.html
+restaurantApp.controller('NearbyListCtrl', function ($scope, RestaurantRestangular) {
 
   // This will be populated with Restangular
   $scope.restaurants = [];
@@ -38,33 +36,67 @@ restaurantApp.controller('IndexCtrl', function ($scope, RestaurantRestangular) {
     };
   });
 
-
   // -- Native navigation
-
   // Set navigation bar..
-  steroids.view.navigationBar.show("Restaurants");
+  steroids.view.navigationBar.show("List");
 
   // ..and add a button to it
-  var addButton = new steroids.buttons.NavigationBarButton();
-  addButton.title = "Add";
+  var mapButton = new steroids.buttons.NavigationBarButton();
+  mapButton.title = "Map";
 
   // ..set callback for tap action
-  addButton.onTap = function() {
-    var addView = new steroids.views.WebView("/views/restaurant/new.html");
-    steroids.modal.show(addView);
+  mapButton.onTap = function() {
+    var mapView = new steroids.views.WebView("/views/restaurant/nearby_map.html");
+      steroids.layers.push(mapView);
   };
 
   // and finally put it to navigation bar
   steroids.view.navigationBar.setButtons({
-    right: [addButton]
+    right: [mapButton]
   });
 
+});
+
+
+// Nearby Map: http://localhost/views/restaurant/nearby_map.html
+restaurantApp.controller('NearbyMapCtrl', function ($scope, RestaurantRestangular) {
+
+    // -- Native navigation
+    // Set navigation bar..
+    steroids.view.navigationBar.show("Map");
+
+    var onSuccess = function(position) {
+        alert('Latitude: '          + position.coords.latitude          + '\n' +
+            'Longitude: '         + position.coords.longitude         + '\n' +
+            'Altitude: '          + position.coords.altitude          + '\n' +
+            'Accuracy: '          + position.coords.accuracy          + '\n' +
+            'Altitude Accuracy: ' + position.coords.altitudeAccuracy  + '\n' +
+            'Heading: '           + position.coords.heading           + '\n' +
+            'Speed: '             + position.coords.speed             + '\n' +
+            'Timestamp: '         + position.timestamp                + '\n');
+    };
+
+    function onError(error) {
+        alert('code: '    + error.code    + '\n' +
+            'message: ' + error.message + '\n');
+    }
+
+    navigator.geolocation.getCurrentPosition(onSuccess, onError);
+
+});
+
+
+// Search: http://localhost/views/restaurant/search.html
+restaurantApp.controller('SearchCtrl', function ($scope, RestaurantRestangular) {
+
+    // -- Native navigation
+    // Set navigation bar..
+    steroids.view.navigationBar.show("Search");
 
 });
 
 
 // Show: http://localhost/views/restaurant/show.html?id=<id>
-
 restaurantApp.controller('ShowCtrl', function ($scope, RestaurantRestangular) {
 
   // Helper function for loading restaurant data with spinner
@@ -109,42 +141,7 @@ restaurantApp.controller('ShowCtrl', function ($scope, RestaurantRestangular) {
 });
 
 
-// New: http://localhost/views/restaurant/new.html
-
-restaurantApp.controller('NewCtrl', function ($scope, RestaurantRestangular) {
-
-  $scope.close = function() {
-    steroids.modal.hide();
-  };
-
-  $scope.create = function(restaurant) {
-    $scope.loading = true;
-
-    RestaurantRestangular.all('restaurant').post(restaurant).then(function() {
-
-      // Notify the index.html to reload
-      var msg = { status: 'reload' };
-      window.postMessage(msg, "*");
-
-      $scope.close();
-      $scope.loading = false;
-
-    }, function() {
-      $scope.loading = false;
-
-      alert("Error when creating the object, is Restangular configured correctly, are the permissions set correctly?");
-
-    });
-
-  }
-
-  $scope.restaurant = {};
-
-});
-
-
 // Edit: http://localhost/views/restaurant/edit.html
-
 restaurantApp.controller('EditCtrl', function ($scope, RestaurantRestangular) {
 
   var id  = localStorage.getItem("currentRestaurantId"),
