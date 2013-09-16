@@ -1,7 +1,7 @@
 Ttr::Application.routes.draw do
-  devise_for :admin_users, ActiveAdmin::Devise.config
-  ActiveAdmin.routes(self)
 
+  devise_for :admins
+  mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'
   resources :restaurant
 
   root :to => redirect('/admin')

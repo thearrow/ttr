@@ -43,11 +43,17 @@ gem 'better_errors', group: :development
 # Quiet assets in development log
 gem 'quiet_assets', group: :development
 
-# Use latest version of Active Admin for Rails 4
-gem 'activeadmin', github: 'gregbell/active_admin', branch: 'rails4'
+# Use Rails Admin to generate the administrative interface
+gem 'rails_admin'
+
+# Use enumerize for restaurant attributes like 'best for' etc.
+gem 'enumerize'
 
 # Use Capistrano for deployment
 # gem 'capistrano', group: :development
 
 # Use debugger
 # gem 'debugger', group: [:development, :test]
+
+
+gem "devise"

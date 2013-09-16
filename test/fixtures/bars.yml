@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  food: false
+  best_for: MyString
+
+two:
+  food: false
+  best_for: MyString

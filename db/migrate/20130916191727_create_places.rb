@@ -1,8 +1,8 @@
-class CreateRestaurants < ActiveRecord::Migration
+class CreatePlaces < ActiveRecord::Migration
   def change
-    create_table :restaurants do |t|
+    create_table :places do |t|
       t.string :name
-      t.string :description
+      t.text :description
       t.string :url
       t.string :street
       t.string :city
@@ -12,6 +12,9 @@ class CreateRestaurants < ActiveRecord::Migration
       t.string :phone
       t.decimal :latitude, :precision => 15, :scale => 10
       t.decimal :longitude, :precision => 15, :scale => 10
+      t.string :type
+      t.boolean :food
+      t.string :best_for
 
       t.timestamps
     end

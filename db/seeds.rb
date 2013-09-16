@@ -6,6 +6,8 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
+Admin.create(email: 'admin@example.com', password: 'password')
+
 Restaurant.create(
     {
       name: 'Northstar',
@@ -18,6 +20,33 @@ Restaurant.create(
       neighborhood: 'Short North',
       phone: '(614) 298-9999',
       latitude: 39.981964,
-      longitude: -83.004305
+      longitude: -83.004305,
+      reservations: true,
+      reservations_link: 'http://www.opentable.com',
+      tt_article: 'http://www.tastingtable.com',
+      tt_date: DateTime.now,
+      price: 2
+    }
+)
+
+Bar.create(
+    {
+        name: 'Out-R-Inn',
+        description: 'Grungy Campus Bar.',
+        url: 'http://www.outrinn.com',
+        street: '20 E Frambes Ave',
+        city: 'Columbus',
+        state: 'OH',
+        zip: '43201',
+        neighborhood: 'University District',
+        phone: '(614) 294-9259',
+        latitude: 40.004964,
+        longitude: -83.008696,
+        reservations: false,
+        reservations_link: 'http://www.opentable.com',
+        tt_article: 'http://www.tastingtable.com',
+        tt_date: DateTime.now,
+        price: 1,
+        food: false
     }
 )
