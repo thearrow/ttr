@@ -29,6 +29,9 @@ RailsAdmin.config do |config|
   # Label methods for model instances:
   # config.label_methods << :description # Default is [:name, :title]
 
+  config.navigation_static_links = {
+      'Push Notifications' => '/push_notifications'
+  }
 
   config.model 'Admin' do
     navigation_icon 'icon-user'

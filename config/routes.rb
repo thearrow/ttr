@@ -13,5 +13,7 @@ Ttr::Application.routes.draw do
     get 'near', on: :collection
   end
 
+  get '/push_notifications', :to => 'admin/push#index'
+
   root :to => redirect('/admin')
 end
