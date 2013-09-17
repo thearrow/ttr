@@ -47,6 +47,9 @@ gem 'quiet_assets', group: :development
 gem 'rails_admin'
 gem 'devise'
 
+# Use GeoKit to locate nearby places
+gem 'geokit-rails'
+
 # Use Capistrano for deployment
 # gem 'capistrano', group: :development
 
