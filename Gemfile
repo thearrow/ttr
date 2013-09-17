@@ -43,11 +43,9 @@ gem 'better_errors', group: :development
 # Quiet assets in development log
 gem 'quiet_assets', group: :development
 
-# Use Rails Admin to generate the administrative interface
+# Use Rails Admin to generate the administrative interface, devise for authentication
 gem 'rails_admin'
-
-# Use enumerize for restaurant attributes like 'best for' etc.
-gem 'enumerize'
+gem 'devise'
 
 # Use Capistrano for deployment
 # gem 'capistrano', group: :development
@@ -56,4 +54,3 @@ gem 'enumerize'
 # gem 'debugger', group: [:development, :test]
 
 
-gem "devise"

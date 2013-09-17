@@ -1,8 +1,4 @@
 class Place < ActiveRecord::Base
-
-  rails_admin do
-    #don't show the type field, used automatically for single-table-inheritance
-    exclude_fields :type
-  end
-
+  has_and_belongs_to_many :tag_atmospheres
+  has_and_belongs_to_many :tag_best_fors
 end

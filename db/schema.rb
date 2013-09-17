@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130916202532) do
+ActiveRecord::Schema.define(version: 20130917004040) do
 
   create_table "admins", force: true do |t|
     t.string   "email",                  default: "", null: false
@@ -45,7 +45,6 @@ ActiveRecord::Schema.define(version: 20130916202532) do
     t.decimal  "longitude",         precision: 15, scale: 10
     t.string   "type"
     t.boolean  "food"
-    t.string   "best_for"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "reservations"
@@ -54,6 +53,16 @@ ActiveRecord::Schema.define(version: 20130916202532) do
     t.datetime "tt_date"
     t.integer  "price"
     t.boolean  "outdoor"
+  end
+
+  create_table "places_tag_atmospheres", force: true do |t|
+    t.integer "place_id"
+    t.integer "tag_atmosphere_id"
+  end
+
+  create_table "places_tag_best_fors", force: true do |t|
+    t.integer "place_id"
+    t.integer "tag_best_for_id"
   end
 
   create_table "rails_admin_histories", force: true do |t|
@@ -68,5 +77,17 @@ ActiveRecord::Schema.define(version: 20130916202532) do
   end
 
   add_index "rails_admin_histories", ["item", "table", "month", "year"], name: "index_rails_admin_histories", using: :btree
+
+  create_table "tag_atmospheres", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "tag_best_fors", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
 end

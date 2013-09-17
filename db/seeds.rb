@@ -50,3 +50,17 @@ Bar.create(
         food: false
     }
 )
+
+atmospheres = ['Romantic', 'Fancy', 'Take Your Parents', 'Good for a Group', 'Foodist Scene', 'Kid-Friendly',
+        'Casual', 'Good for Doing Business', 'Quiet', 'Wine Bar', 'Classic Cocktails', 'Innovative Cocktails',
+        'Dive Bar', 'Neighborhood Bar', 'Beer Bar', 'Lounge', 'Speakeasy', 'Pub', 'Care Bar', 'Nightclub']
+best_fors = ['Breakfast/Brunch', 'Lunch', 'Dinner', 'Late Night', 'Take Out', 'Delivery', 'Snack',
+        'Dates', 'Happy Hour', 'Late-Night', 'Birthdays/Large Parties', 'Turbo-drinking', 'Work Drinks']
+
+atmospheres.each do |tag|
+  TagAtmosphere.create(name: tag)
+end
+
+best_fors.each do |tag|
+  TagBestFor.create(name: tag)
+end
