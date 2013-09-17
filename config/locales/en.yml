@@ -25,3 +25,20 @@ en:
     two: "$$"
     three: "$$$"
     four: "$$$$"
+  activerecord:
+    models:
+      tag_atmosphere:
+        one: Tag - Atmosphere
+        other: Tags - Atmosphere
+      tag_best_for:
+        one: Tag - Best For
+        other: Tags - Best For
+      bar:
+        one: Bar
+        other: Bars
+      restaurant:
+        one: Restaurant
+        other: Restaurants
+      place:
+        one: Place
+        other: All Places

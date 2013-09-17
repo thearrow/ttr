@@ -26,16 +26,17 @@ RailsAdmin.config do |config|
   # Number of default rows per-page:
   # config.default_items_per_page = 20
 
-  # Exclude specific models (keep the others):
-  # config.excluded_models = ['Restaurant']
-
-  # Include specific models (exclude the others):
-  # config.included_models = ['Restaurant']
-
   # Label methods for model instances:
   # config.label_methods << :description # Default is [:name, :title]
 
+
+  config.model 'Admin' do
+    navigation_icon 'icon-user'
+  end
+
+  #Display labels defined in /config/locales/en.yml
   config.model 'Place' do
+    navigation_icon 'icon-home'
     exclude_fields :type
 
     configure :food do
@@ -50,6 +51,7 @@ RailsAdmin.config do |config|
   end
 
   config.model 'Bar' do
+    navigation_icon 'icon-glass'
     exclude_fields :type
 
     configure :food do
@@ -64,6 +66,7 @@ RailsAdmin.config do |config|
   end
 
   config.model 'Restaurant' do
+    navigation_icon 'icon-home'
     exclude_fields :type, :food
 
     configure :reservations do
@@ -72,6 +75,13 @@ RailsAdmin.config do |config|
     configure :outdoor do
       label 'Outdoor Area?'
     end
+  end
+
+  config.model 'TagAtmosphere' do
+    navigation_icon 'icon-tags'
+  end
+  config.model 'TagBestFor' do
+    navigation_icon 'icon-tags'
   end
 
 end
