@@ -1,0 +1,48 @@
+<div ng-app="placesApp">
+
+    <div ng-controller="NearbyCtrl">
+
+        <div class="topcoat-navigation-bar">
+            <div class="topcoat-navigation-bar__item left quarter">
+            </div>
+
+            <div class="topcoat-navigation-bar__item center half">
+                <h1 class="topcoat-navigation-bar__title">Nearby</h1>
+            </div>
+
+            <div class="topcoat-navigation-bar__item right quarter">
+            </div>
+        </div>
+
+        <div class="nearby-container">
+            <p>I want to find:</p>
+            <div class="nearby-radio-container">
+                <label class="topcoat-radio-button">
+                    <input type="radio" name="type" value="places" checked>
+                    <div class="topcoat-radio-button__checkmark"></div>
+                    All
+                </label>
+                <label class="topcoat-radio-button">
+                    <input type="radio" name="type" value="restaurants">
+                    <div class="topcoat-radio-button__checkmark"></div>
+                    Restaurants
+                </label>
+                <label class="topcoat-radio-button">
+                    <input type="radio" name="type" value="bars">
+                    <div class="topcoat-radio-button__checkmark"></div>
+                    Bars
+                </label>
+            </div>
+
+            <p>Near:</p>
+            <button class="topcoat-button centered" hm-tap="nearbyCurrent()">My Current Location</button>
+            <p>-OR-</p>
+            <div class="centered">
+                <input type="text" class="topcoat-text-input" placeholder="Address / City / Zip ..." value="">
+                <button class="topcoat-button" hm-tap="nearbyZip()">Go</button>
+            </div>
+        </div>
+
+    </div>
+
+</div>

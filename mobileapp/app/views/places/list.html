@@ -1,9 +1,12 @@
 <div ng-app="placesApp">
 
-    <div ng-controller="IndexCtrl">
+    <div ng-controller="ListCtrl">
 
         <div class="topcoat-navigation-bar">
             <div class="topcoat-navigation-bar__item left quarter">
+                <button class="topcoat-icon-button--quiet" hm-tap="goBack()">
+                    <span class="topcoat-icon topcoat-icon--back icon-back"></span>
+                </button>
             </div>
 
             <div class="topcoat-navigation-bar__item center half">
@@ -17,11 +20,10 @@
 
         <div class="spinner" ng-show="loading"></div>
 
-        <div class="topcoat-list__container">
-            <ul class="topcoat-list">
-                <!-- order is reversed created timestamp -->
+        <div class="topcoat-list">
+            <ul class="topcoat-list__container">
                 <li class="topcoat-list__item" hm-tap="open(place.id)"
-                    ng-repeat="place in places | orderBy: '-createddate'">
+                    ng-repeat="place in places | orderBy: '-name'">
                     {{ place.name }}
                 </li>
             </ul>
