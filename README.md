@@ -1,6 +1,9 @@
 Tasting Table Restaurants
 =====
 Server/Database: Ruby on Rails + MySQL
+- [Visit http://ttrestaurants.herokuapp.com/](http://ttrestaurants.herokuapp.com/)
+- Login with `username: admin@example.com  password: password`
+
 
 Client: Steroids.js/Phonegap Hybrid Mobile App
 
