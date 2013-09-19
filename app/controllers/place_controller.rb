@@ -1,7 +1,7 @@
 class PlaceController < ApplicationController
 
   #GET /{place_type}
-  # eg. /place OR /restaurant OR /bar
+  # eg. /places OR /restaurants OR /bars
   def index
     @places = place_type.all
     render json: @places
