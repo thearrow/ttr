@@ -6,7 +6,7 @@
 
   <link rel="stylesheet" href="/vendor/topcoat/css/topcoat-mobile-light.css" />
   <link rel="stylesheet" href="/stylesheets/application.css" />
-  <link rel="stylesheet" href="/stylesheets/restaurant.css" />
+  <link rel="stylesheet" href="/stylesheets/places.css" />
 
   <script src="/appgyver/cordova.js"></script>
   <script src="/components/steroids-js/steroids.js"></script>
@@ -23,27 +23,24 @@
   <script src="/models/models.js"></script>
 
   <script src="/controllers/application.js"></script>
-  <script src="/controllers/restaurant.js"></script>
+  <script src="/controllers/places.js"></script>
 </head>
 <body>
 
 
-  <div ng-app="restaurantApp">
+  <div ng-app="placesApp">
 
-  <div ng-controller="NearbyListCtrl">
-    <div class="spinner" ng-show="loading"></div>
-    <div class="topcoat-list__container">
-
-      <ul class="topcoat-list">
-        <!-- order is reversed created timestamp -->
-        <li class="topcoat-list__item" hm-tap="open(restaurant.id)" ng-repeat="restaurant in restaurants | orderBy: '-createddate'">
-          {{ restaurant.name }} - {{ restaurant.description }}
-        </li>
-      </ul>
+    <div ng-controller="ShowCtrl">
+        <div class="spinner" ng-show="loading"></div>
+        <div class="content-padded">
+            <h2>{{place.name}}</h2>
+            <p>{{place.description}}</p>
+            <p>{{place.street}} <br/> {{place.city}}, {{place.state}} {{place.zip}}</p>
+            <p>{{place.phone}}</p>
+            <p><a href="{{place.url}}">{{place.url}}</a></p>
+        </div>
 
     </div>
-
-  </div>
 
 </div>
 

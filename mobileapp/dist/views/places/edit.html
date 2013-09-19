@@ -6,7 +6,7 @@
 
   <link rel="stylesheet" href="/vendor/topcoat/css/topcoat-mobile-light.css" />
   <link rel="stylesheet" href="/stylesheets/application.css" />
-  <link rel="stylesheet" href="/stylesheets/restaurant.css" />
+  <link rel="stylesheet" href="/stylesheets/places.css" />
 
   <script src="/appgyver/cordova.js"></script>
   <script src="/components/steroids-js/steroids.js"></script>
@@ -23,22 +23,28 @@
   <script src="/models/models.js"></script>
 
   <script src="/controllers/application.js"></script>
-  <script src="/controllers/restaurant.js"></script>
+  <script src="/controllers/places.js"></script>
 </head>
 <body>
 
 
-  <div ng-app="restaurantApp">
+  <div ng-app="placesApp">
 
-    <div ng-controller="SearchCtrl">
-        <div class="spinner" ng-show="loading"></div>
-        <div>
+  <div ng-controller="EditCtrl">
+    <div class="spinner" ng-show="loading"></div>
+    <div class="content-padded">
+      <h1>Edit</h1>
 
-            <p>This is a search page.</p>
+      <form class="simple-form">
+        Name: <input type="text" ng-model="places.name" /><br />
+        Description: <input type="text" ng-model="places.description" /><br />
 
-        </div>
-
+        <a class="topcoat-button" hm-tap="update(places)">Update</a>
+        <a class="topcoat-button" hm-tap="close()">Cancel</a>
+      </form>
     </div>
+
+  </div>
 
 </div>
 

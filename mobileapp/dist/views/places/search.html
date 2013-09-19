@@ -6,7 +6,7 @@
 
   <link rel="stylesheet" href="/vendor/topcoat/css/topcoat-mobile-light.css" />
   <link rel="stylesheet" href="/stylesheets/application.css" />
-  <link rel="stylesheet" href="/stylesheets/restaurant.css" />
+  <link rel="stylesheet" href="/stylesheets/places.css" />
 
   <script src="/appgyver/cordova.js"></script>
   <script src="/components/steroids-js/steroids.js"></script>
@@ -23,24 +23,18 @@
   <script src="/models/models.js"></script>
 
   <script src="/controllers/application.js"></script>
-  <script src="/controllers/restaurant.js"></script>
+  <script src="/controllers/places.js"></script>
 </head>
 <body>
 
 
-  <div ng-app="restaurantApp">
+  <div ng-app="placesApp">
 
-  <div ng-controller="ShowCtrl">
-    <div class="spinner" ng-show="loading"></div>
-    <div class="content-padded">
-        <h2>{{restaurant.name}}</h2>
-        <p>{{restaurant.description}}</p>
-        <p>{{restaurant.street}} <br/>
-            {{restaurant.city}}, {{restaurant.state}} {{restaurant.zip}}</p>
-        <p>{{restaurant.phone}}</p>
+    <div ng-controller="SearchCtrl">
+        <div class="spinner" ng-show="loading"></div>
+        <h1>Search Page</h1>
+
     </div>
-
-  </div>
 
 </div>
 

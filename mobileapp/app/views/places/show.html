@@ -1,0 +1,15 @@
+<div ng-app="placesApp">
+
+    <div ng-controller="ShowCtrl">
+        <div class="spinner" ng-show="loading"></div>
+        <div class="content-padded">
+            <h2>{{place.name}}</h2>
+            <p>{{place.description}}</p>
+            <p>{{place.street}} <br/> {{place.city}}, {{place.state}} {{place.zip}}</p>
+            <p>{{place.phone}}</p>
+            <p><a href="{{place.url}}">{{place.url}}</a></p>
+        </div>
+
+    </div>
+
+</div>

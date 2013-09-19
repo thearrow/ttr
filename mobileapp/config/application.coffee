@@ -49,12 +49,12 @@ steroids.config.tabBar.tabs = [
    {
      title: "Nearby"
      icon: "icons/nearby@2x.png"
-     location: "http://localhost/views/restaurant/nearby_list.html"
+     location: "http://localhost/views/places/index.html"
    },
    {
      title: "Search"
      icon: "icons/search@2x.png"
-     location: "http://localhost/views/restaurant/search.html"
+     location: "http://localhost/views/places/search.html"
    },
    {
      title: "Internet"

@@ -6,7 +6,7 @@
 
   <link rel="stylesheet" href="/vendor/topcoat/css/topcoat-mobile-light.css" />
   <link rel="stylesheet" href="/stylesheets/application.css" />
-  <link rel="stylesheet" href="/stylesheets/restaurant.css" />
+  <link rel="stylesheet" href="/stylesheets/<%= yield.controller %>.css" />
 
   <script src="/appgyver/cordova.js"></script>
   <script src="/components/steroids-js/steroids.js"></script>
@@ -23,24 +23,12 @@
   <script src="/models/models.js"></script>
 
   <script src="/controllers/application.js"></script>
-  <script src="/controllers/restaurant.js"></script>
+  <script src="/controllers/<%= yield.controller %>.js"></script>
 </head>
 <body>
 
 
-  <div ng-app="restaurantApp">
-
-    <div ng-controller="NearbyMapCtrl">
-        <div class="spinner" ng-show="loading"></div>
-        <div>
-
-            <p>This is a map.</p>
-
-        </div>
-
-    </div>
-
-</div>
+  <%= yield.view %>
 
 </body>
 </html>
