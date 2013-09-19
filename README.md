@@ -6,6 +6,7 @@ Server/Database: Ruby on Rails + MySQL
 
 
 Client: Steroids.js/Phonegap Hybrid Mobile App
+- [Visit http://share.appgyver.com for an online app simulator](https://share.appgyver.com/?id=5345&hash=d349bc95f71feb3c50618dc0e3bfa2e681fc294ecd3638e7091f0daea79d67d4&device_type=iphone)
 
 
 One-Time Dev Setup
