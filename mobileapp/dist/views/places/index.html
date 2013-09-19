@@ -30,20 +30,34 @@
 
   <div ng-app="placesApp">
 
-  <div ng-controller="IndexCtrl">
-    <div class="spinner" ng-show="loading"></div>
-    <div class="topcoat-list__container">
+    <div ng-controller="IndexCtrl">
 
-      <ul class="topcoat-list">
-        <!-- order is reversed created timestamp -->
-        <li class="topcoat-list__item" hm-tap="open(place.id)" ng-repeat="place in places | orderBy: '-createddate'">
-          {{ place.name }}
-        </li>
-      </ul>
+        <div class="topcoat-navigation-bar">
+            <div class="topcoat-navigation-bar__item left quarter">
+            </div>
+
+            <div class="topcoat-navigation-bar__item center half">
+                <h1 class="topcoat-navigation-bar__title">List</h1>
+            </div>
+
+            <div class="topcoat-navigation-bar__item right quarter">
+                <button class="topcoat-button navbar-button" hm-tap="goToMap()">Map</button>
+            </div>
+        </div>
+
+        <div class="spinner" ng-show="loading"></div>
+
+        <div class="topcoat-list__container">
+            <ul class="topcoat-list">
+                <!-- order is reversed created timestamp -->
+                <li class="topcoat-list__item" hm-tap="open(place.id)"
+                    ng-repeat="place in places | orderBy: '-createddate'">
+                    {{ place.name }}
+                </li>
+            </ul>
+        </div>
 
     </div>
-
-  </div>
 
 </div>
 

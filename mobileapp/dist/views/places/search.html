@@ -31,8 +31,20 @@
   <div ng-app="placesApp">
 
     <div ng-controller="SearchCtrl">
+
+        <div class="topcoat-navigation-bar">
+            <div class="topcoat-navigation-bar__item center full">
+                <h1 class="topcoat-navigation-bar__title">Search</h1>
+            </div>
+        </div>
+
         <div class="spinner" ng-show="loading"></div>
-        <h1>Search Page</h1>
+
+        <div>
+            <input type="search" class="topcoat-search-input" placeholder="Name of Restaurant/Bar...">
+        </div>
+
+
 
     </div>
 

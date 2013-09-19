@@ -15,7 +15,10 @@ placesApp.controller('IndexCtrl', function ($scope, PlacesRestangular) {
   // Helper function for opening new webviews
   $scope.open = function(id) {
     webView = new steroids.views.WebView("/views/places/show.html?id="+id);
-    steroids.layers.push(webView);
+    steroids.layers.push({
+        view: webView,
+        navigationBar: false
+      });
   };
 
   // Helper function for loading places data with spinner
@@ -42,27 +45,60 @@ placesApp.controller('IndexCtrl', function ($scope, PlacesRestangular) {
     };
   });
 
+    $scope.goToMap = function(){
+        var flip = new steroids.Animation("flipHorizontalFromRight");
+        webView = new steroids.views.WebView("/views/places/map.html");
+        steroids.layers.push({
+            view: webView,
+            navigationBar: false,
+            animation: flip
+        });
+    }
 
-  // -- Native navigation
+});
 
-  // Set navigation bar..
-  steroids.view.navigationBar.show("List");
+// Map: http://localhost/views/places/map.html
+placesApp.controller('MapCtrl', function ($scope, PlacesRestangular) {
 
-  // ..and add a button to it
-  var addButton = new steroids.buttons.NavigationBarButton();
-  addButton.title = "Add";
+    // This will be populated with Restangular
+    $scope.places = [];
 
-  // ..set callback for tap action
-  addButton.onTap = function() {
-    var addView = new steroids.views.WebView("/views/places/new.html");
-    steroids.modal.show(addView);
-  };
+    // Helper function for opening new webviews
+    $scope.open = function(id) {
+        webView = new steroids.views.WebView("/views/places/show.html?id="+id);
+        steroids.layers.push({
+            view: webView,
+            navigationBar: false
+        });
+    };
 
-  // and finally put it to navigation bar
-  steroids.view.navigationBar.setButtons({
-    right: [addButton]
-  });
+    // Helper function for loading places data with spinner
+    $scope.loadPlaces = function() {
+        $scope.loading = true;
 
+        places.getList().then(function(data) {
+            $scope.places = data;
+            $scope.loading = false;
+        });
+
+    };
+
+    // Fetch all objects from the backend (see app/models/places.js)
+    var places = PlacesRestangular.all('places');
+    $scope.loadPlaces();
+
+
+    // Get notified when an another webview modifies the data and reload
+    window.addEventListener("message", function(event) {
+        // reload data on message with reload status
+        if (event.data.status === "reload") {
+            $scope.loadPlaces();
+        };
+    });
+
+    $scope.goToList = function(){
+        steroids.layers.pop();
+    }
 
 });
 
@@ -70,7 +106,7 @@ placesApp.controller('IndexCtrl', function ($scope, PlacesRestangular) {
 // Show: http://localhost/views/places/show.html?id=<id>
 placesApp.controller('ShowCtrl', function ($scope, PlacesRestangular) {
 
-  // Helper function for loading places data with spinner
+    // Helper function for loading places data with spinner
   $scope.loadPlaces = function() {
     $scope.loading = true;
 
@@ -94,20 +130,10 @@ placesApp.controller('ShowCtrl', function ($scope, PlacesRestangular) {
     };
   });
 
-  // -- Native navigation
-  steroids.view.navigationBar.show("Places: " + steroids.view.params.id );
 
-  var editButton = new steroids.buttons.NavigationBarButton();
-  editButton.title = "Edit";
-
-  editButton.onTap = function() {
-    webView = new steroids.views.WebView("/views/places/edit.html");
-    steroids.modal.show(webView);
+  $scope.goBack = function() {
+      steroids.layers.pop();
   }
-
-  steroids.view.navigationBar.setButtons({
-    right: [editButton]
-  });
 
 
 });

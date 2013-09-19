@@ -22,3 +22,26 @@
   -webkit-animation-iteration-count: infinite;
   -webkit-animation-timing-function: linear;
 }
+
+.icon-back {
+    background-image: url("../../vendor/topcoat/svg/back_light.png");
+    background-repeat: no-repeat;
+    background-size: 14px;
+    opacity: 0.5;
+}
+
+
+.topcoat-search-input {
+    background-image: url("../../vendor/topcoat/svg/search.png");
+    background-position: 1em center;
+    background-repeat: no-repeat;
+    background-size: 14px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    width: 90%;
+}
+
+.navbar-button{
+    margin-top: 6px;
+}

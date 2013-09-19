@@ -74,10 +74,10 @@ steroids.config.tabBar.tabs = [
 # Setting these values will override the values set by the application theme defined by steroids.config.theme
 # Default for all attributes: ""
 
-# steroids.config.tabBar.tintColor = ""
-# steroids.config.tabBar.tabTitleColor = ""
-# steroids.config.tabBar.tabTitleShadowColor = ""
-# steroids.config.tabBar.selectedTabTintColor = ""
+steroids.config.tabBar.tintColor = "#e5e9e8"
+steroids.config.tabBar.tabTitleColor = "#454545"
+steroids.config.tabBar.tabTitleShadowColor = "#000000"
+steroids.config.tabBar.selectedTabTintColor = "#454545"
 
 # steroids.config.navigationBar.tintColor = "#00aeef"
 # steroids.config.navigationBar.titleColor = "#ffffff"

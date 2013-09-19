@@ -31,9 +31,20 @@
   <div ng-app="placesApp">
 
     <div ng-controller="ShowCtrl">
+
+        <div class="topcoat-navigation-bar">
+            <div class="topcoat-navigation-bar__item left quarter">
+                <button class="topcoat-icon-button--quiet" hm-tap="goBack()">
+                    <span class="topcoat-icon topcoat-icon--back icon-back"></span>
+                </button>
+            </div>
+            <div class="topcoat-navigation-bar__item center half">
+                {{place.name}}
+            </div>
+        </div>
         <div class="spinner" ng-show="loading"></div>
+
         <div class="content-padded">
-            <h2>{{place.name}}</h2>
             <p>{{place.description}}</p>
             <p>{{place.street}} <br/> {{place.city}}, {{place.state}} {{place.zip}}</p>
             <p>{{place.phone}}</p>
