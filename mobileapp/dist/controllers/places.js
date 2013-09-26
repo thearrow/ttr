@@ -1,154 +1,119 @@
-var placesApp = angular.module('placesApp', ['PlacesModel', 'hmTouchevents']);
+(function() {
+  var placesApp;
 
-// Nearby: http://localhost/views/places/nearby.html
-placesApp.controller('NearbyCtrl', function ($scope, PlacesRestangular) {
-    $scope.nearbyCurrent = function(){
-        webView = new steroids.views.WebView("/views/places/list.html");
-        steroids.layers.push({
-            view: webView,
-            navigationBar: false
-        });
+  placesApp = angular.module("placesApp", ["PlacesModel", "hmTouchevents"]);
+
+  placesApp.controller("NearbyCtrl", function($scope, PlacesRestangular) {
+    $scope.placeType = 'places';
+    $scope.nearbyCurrent = function() {
+      var webView;
+      webView = new steroids.views.WebView("/views/places/list.html?placeType=" + $scope.placeType);
+      return steroids.layers.push({
+        view: webView,
+        navigationBar: false
+      });
     };
-
-    $scope.nearbyZip = function(){
-        alert('ZIP!');
+    return $scope.nearbyZip = function() {
+      return alert("ZIP!");
     };
-});
+  });
 
-// List: http://localhost/views/places/list.html
-placesApp.controller('ListCtrl', function ($scope, PlacesRestangular) {
-    // This will be populated with Restangular
+  placesApp.controller("ListCtrl", function($scope, PlacesRestangular) {
+    var places;
     $scope.places = [];
-
-    // Helper function for opening new webviews
-    $scope.open = function (id) {
-        webView = new steroids.views.WebView("/views/places/show.html?id=" + id);
-        steroids.layers.push({
-            view: webView,
-            navigationBar: false
-        });
+    $scope.open = function(id) {
+      var webView;
+      webView = new steroids.views.WebView("/views/places/show.html?id=" + id);
+      return steroids.layers.push({
+        view: webView,
+        navigationBar: false
+      });
     };
-
-    // Helper function for loading places data with spinner
-    $scope.loadPlaces = function () {
-        $scope.loading = true;
-
-        places.getList().then(function (data) {
-            $scope.places = data;
-            $scope.loading = false;
-        });
+    $scope.loadPlaces = function() {
+      $scope.loading = true;
+      return places.getList().then(function(data) {
+        $scope.places = data;
+        return $scope.loading = false;
+      });
     };
-
-    // Fetch all objects from the backend (see app/models/places.js)
-    var places = PlacesRestangular.all('places');
+    places = PlacesRestangular.all(steroids.view.params.placeType);
     $scope.loadPlaces();
-
-    // Get notified when an another webview modifies the data and reload
-    window.addEventListener("message", function (event) {
-        // reload data on message with reload status
-        if (event.data.status === "reload") {
-            $scope.loadPlaces();
-        }
+    window.addEventListener("message", function(event) {
+      if (event.data.status === "reload") {
+        return $scope.loadPlaces();
+      }
     });
-
-    $scope.goToMap = function () {
-        var flip = new steroids.Animation("flipHorizontalFromRight");
-        webView = new steroids.views.WebView("/views/places/map.html");
-        steroids.layers.push({
-            view: webView,
-            navigationBar: false,
-            animation: flip
-        });
+    $scope.goToMap = function() {
+      var flip, webView;
+      flip = new steroids.Animation("flipHorizontalFromRight");
+      webView = new steroids.views.WebView("/views/places/map.html");
+      return steroids.layers.push({
+        view: webView,
+        navigationBar: false,
+        animation: flip
+      });
     };
-
-    $scope.goBack = function(){
-        steroids.layers.pop();
+    return $scope.goBack = function() {
+      return steroids.layers.pop();
     };
-});
+  });
 
-// Map: http://localhost/views/places/map.html
-placesApp.controller('MapCtrl', function ($scope, PlacesRestangular) {
-    // This will be populated with Restangular
+  placesApp.controller("MapCtrl", function($scope, PlacesRestangular) {
+    var places;
     $scope.places = [];
-
-    // Helper function for opening new webviews
-    $scope.open = function (id) {
-        webView = new steroids.views.WebView("/views/places/show.html?id=" + id);
-        steroids.layers.push({
-            view: webView,
-            navigationBar: false
-        });
+    $scope.open = function(id) {
+      var webView;
+      webView = new steroids.views.WebView("/views/places/show.html?id=" + id);
+      return steroids.layers.push({
+        view: webView,
+        navigationBar: false
+      });
     };
-
-    // Helper function for loading places data with spinner
-    $scope.loadPlaces = function () {
-        $scope.loading = true;
-
-        places.getList().then(function (data) {
-            $scope.places = data;
-            $scope.loading = false;
-        });
-
+    $scope.loadPlaces = function() {
+      $scope.loading = true;
+      return places.getList().then(function(data) {
+        $scope.places = data;
+        return $scope.loading = false;
+      });
     };
-
-    // Fetch all objects from the backend (see app/models/places.js)
-    var places = PlacesRestangular.all('places');
+    places = PlacesRestangular.all("places");
     $scope.loadPlaces();
-
-
-    // Get notified when an another webview modifies the data and reload
-    window.addEventListener("message", function (event) {
-        // reload data on message with reload status
-        if (event.data.status === "reload") {
-            $scope.loadPlaces();
-        }
+    window.addEventListener("message", function(event) {
+      if (event.data.status === "reload") {
+        return $scope.loadPlaces();
+      }
     });
-
-    $scope.goToList = function () {
-        steroids.layers.pop();
+    $scope.goToList = function() {
+      return steroids.layers.pop();
     };
-
-    $scope.goBack = function(){
-        steroids.layers.pop();
-        steroids.layers.pop();
+    return $scope.goBack = function() {
+      steroids.layers.pop();
+      return steroids.layers.pop();
     };
-});
+  });
 
-
-// Show: http://localhost/views/places/show.html?id=<id>
-placesApp.controller('ShowCtrl', function ($scope, PlacesRestangular) {
-    // Helper function for loading places data with spinner
-    $scope.loadPlaces = function () {
-        $scope.loading = true;
-
-        place.get().then(function (data) {
-            $scope.place = data;
-            $scope.loading = false;
-        });
-
+  placesApp.controller("ShowCtrl", function($scope, PlacesRestangular) {
+    var place;
+    $scope.loadPlaces = function() {
+      $scope.loading = true;
+      return place.get().then(function(data) {
+        $scope.place = data;
+        return $scope.loading = false;
+      });
     };
-
-    // Save current places id to localStorage (edit.html gets it from there)
     localStorage.setItem("currentPlacesId", steroids.view.params.id);
-
-    var place = PlacesRestangular.one("places", steroids.view.params.id);
-    $scope.loadPlaces()
-
-    // When the data is modified in the edit.html, get notified and update (edit is on top of this view)
-    window.addEventListener("message", function (event) {
-        if (event.data.status === "reload") {
-            $scope.loadPlaces()
-        }
+    place = PlacesRestangular.one("places", steroids.view.params.id);
+    $scope.loadPlaces();
+    window.addEventListener("message", function(event) {
+      if (event.data.status === "reload") {
+        return $scope.loadPlaces();
+      }
     });
-
-
-    $scope.goBack = function () {
-        steroids.layers.pop();
+    return $scope.goBack = function() {
+      return steroids.layers.pop();
     };
-});
+  });
 
+  placesApp.controller("SearchCtrl", function($scope, PlacesRestangular) {});
 
-// Search: http://localhost/views/places/search.html
-placesApp.controller('SearchCtrl', function ($scope, PlacesRestangular) {
-
-});
+}).call(this);
