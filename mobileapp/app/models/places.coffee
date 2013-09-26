@@ -1,4 +1,4 @@
-# The contents of individual model .js files will be concatenated into dist/models.js
+# The contents of individual model .coffee files will be concatenated into dist/models.js
 (->
 
   # Protects views where angular is not loaded from errors
@@ -6,7 +6,7 @@
   module = angular.module("PlacesModel", ["restangular"])
   module.factory "PlacesRestangular", (Restangular) ->
     Restangular.withConfig (RestangularConfigurer) ->
-      #Set to heroku address for now, changes need to be made on heroku to be visible to the app!
+      # Set to heroku address for now, changes need to be made on heroku to be visible to the app!
       RestangularConfigurer.setBaseUrl "http://ttrestaurants.herokuapp.com"
 
 )()

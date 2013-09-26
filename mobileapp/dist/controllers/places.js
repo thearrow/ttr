@@ -4,17 +4,31 @@
   placesApp = angular.module("placesApp", ["PlacesModel", "hmTouchevents"]);
 
   placesApp.controller("NearbyCtrl", function($scope, PlacesRestangular) {
+    var displayResults, onError, onSuccess;
     $scope.placeType = 'places';
+    $scope.lat = 0.0;
+    $scope.lng = 0.0;
+    onError = function(error) {
+      return alert("Couldn't get your location: " + error.message);
+    };
+    onSuccess = function(position) {
+      $scope.lat = position.coords.latitude;
+      $scope.lng = position.coords.longitude;
+      return displayResults();
+    };
     $scope.nearbyCurrent = function() {
+      return navigator.geolocation.getCurrentPosition(onSuccess, onError);
+    };
+    $scope.nearbyZip = function() {
+      return alert("ZIP!");
+    };
+    return displayResults = function() {
       var webView;
-      webView = new steroids.views.WebView("/views/places/list.html?placeType=" + $scope.placeType);
+      webView = new steroids.views.WebView("/views/places/list.html?placeType=" + $scope.placeType + "&lat=" + $scope.lat + "&lng=" + $scope.lng);
       return steroids.layers.push({
         view: webView,
         navigationBar: false
       });
-    };
-    return $scope.nearbyZip = function() {
-      return alert("ZIP!");
     };
   });
 
@@ -30,8 +44,14 @@
       });
     };
     $scope.loadPlaces = function() {
+      var params;
       $scope.loading = true;
-      return places.getList().then(function(data) {
+      params = steroids.view.params;
+      return places.customGETLIST("near", {
+        lat: params.lat,
+        lng: params.lng,
+        rad: 10
+      }).then(function(data) {
         $scope.places = data;
         return $scope.loading = false;
       });
@@ -87,7 +107,6 @@
       return steroids.layers.pop();
     };
     return $scope.goBack = function() {
-      steroids.layers.pop();
       return steroids.layers.pop();
     };
   });

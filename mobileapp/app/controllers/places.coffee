@@ -1,21 +1,37 @@
+# This file is written in coffeescript - a leaner javascript - indentation matters.
+# See: http://coffeescript.org/
+
 placesApp = angular.module("placesApp", ["PlacesModel", "hmTouchevents"])
+
 
 # Nearby: http://localhost/views/places/nearby.html
 placesApp.controller "NearbyCtrl", ($scope, PlacesRestangular) ->
   $scope.placeType = 'places'
+  $scope.lat = 0.0
+  $scope.lng = 0.0
+
+  onError = (error) ->
+    alert "Couldn't get your location: " + error.message
+  onSuccess = (position) ->
+    $scope.lat = position.coords.latitude
+    $scope.lng = position.coords.longitude
+    displayResults()
 
   $scope.nearbyCurrent = ->
-    webView = new steroids.views.WebView("/views/places/list.html?placeType=" + $scope.placeType)
-    steroids.layers.push
-      view: webView
-      navigationBar: false
+    navigator.geolocation.getCurrentPosition onSuccess, onError
 
   $scope.nearbyZip = ->
     alert "ZIP!"
 
+  displayResults = ->
+    webView = new steroids.views.WebView(
+      "/views/places/list.html?placeType=#{$scope.placeType}&lat=#{$scope.lat}&lng=#{$scope.lng}")
+    steroids.layers.push
+      view: webView
+      navigationBar: false
 
 
-# List: http://localhost/views/places/list.html
+# List: http://localhost/views/places/list.html?placeType=<type>&lat=<lat>&lng=<lng>
 placesApp.controller "ListCtrl", ($scope, PlacesRestangular) ->
 
   # This will be populated with Restangular
@@ -31,11 +47,13 @@ placesApp.controller "ListCtrl", ($scope, PlacesRestangular) ->
   # Helper function for loading places data with spinner
   $scope.loadPlaces = ->
     $scope.loading = true
-    places.getList().then (data) ->
+    params = steroids.view.params
+    places.customGETLIST("near", {lat: params.lat, lng: params.lng, rad: 10}).then (data) ->
       $scope.places = data
       $scope.loading = false
 
-  # Fetch all objects from the backend (all places, restaurants only, bars only, etc.)
+  # Search for nearby places from the backend (all places, restaurants only, bars only, etc.)
+  # (defaults to 10-mile radius)
   places = PlacesRestangular.all(steroids.view.params.placeType)
   $scope.loadPlaces()
 
@@ -91,7 +109,6 @@ placesApp.controller "MapCtrl", ($scope, PlacesRestangular) ->
 
   $scope.goBack = ->
     steroids.layers.pop()
-    steroids.layers.pop()
 
 
 
@@ -116,6 +133,7 @@ placesApp.controller "ShowCtrl", ($scope, PlacesRestangular) ->
 
   $scope.goBack = ->
     steroids.layers.pop()
+
 
 
 # Search: http://localhost/views/places/search.html
