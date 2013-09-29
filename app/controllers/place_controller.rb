@@ -29,7 +29,8 @@ class PlaceController < ApplicationController
       coords = MultiGeocoder.geocode(params[:text])
       lat, lng = coords.lat, coords.lng
     end
-    @places = place_type.by_distance(within: params[:rad], origin: [lat, lng])
+    @places = place_type.within(params[:rad], origin: [lat, lng])
+    @places.sort! {|a,b| a.distance_to([lat,lng]) <=> b.distance_to([lat,lng])}
     render json: @places
   end
 
