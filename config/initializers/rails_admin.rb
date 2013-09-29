@@ -1,11 +1,6 @@
-# RailsAdmin config file. Generated on September 16, 2013 18:25
 # See github.com/sferik/rails_admin for more informations
 
 RailsAdmin.config do |config|
-
-
-  ################  Global configuration  ################
-
   # Set the admin name here (optional second array element will appear in red). For example:
   config.main_app_name = ['Tasting Table Restaurants', 'Admin']
   # or for a more dynamic name:
@@ -37,47 +32,22 @@ RailsAdmin.config do |config|
     navigation_icon 'icon-user'
   end
 
-  #Display labels defined in /config/locales/en.yml
   config.model 'Place' do
     navigation_icon 'icon-home'
     exclude_fields :type
-
-    configure :food do
-      label 'Serves Food?'
-    end
-    configure :reservations do
-      label 'Reservations Accepted?'
-    end
-    configure :outdoor do
-      label 'Outdoor Area?'
-    end
+    configure_fields()
   end
 
   config.model 'Bar' do
     navigation_icon 'icon-glass'
     exclude_fields :type
-
-    configure :food do
-      label 'Serves Food?'
-    end
-    configure :reservations do
-      label 'Reservations Accepted?'
-    end
-    configure :outdoor do
-      label 'Outdoor Area?'
-    end
+    configure_fields()
   end
 
   config.model 'Restaurant' do
     navigation_icon 'icon-home'
     exclude_fields :type, :food
-
-    configure :reservations do
-      label 'Reservations Accepted?'
-    end
-    configure :outdoor do
-      label 'Outdoor Area?'
-    end
+    configure_fields()
   end
 
   config.model 'TagAtmosphere' do
@@ -87,4 +57,76 @@ RailsAdmin.config do |config|
     navigation_icon 'icon-tags'
   end
 
+  #Category display labels (Tags - Atmosphere, etc.) are defined in /config/locales/en.yml
+
+  def configure_fields
+    edit do
+      group :default do
+        label 'General Info'
+      end
+      group :attrib do
+        label 'Attributes'
+      end
+      group :tags do
+        label 'Tags'
+        help 'Choose from tags on the left-list, then add them to the right-list.'
+      end
+      group :latlng do
+        label 'Latitude & Longitude'
+        help 'If left blank, latitude & longitude will be automatically created from address information.'
+      end
+    end
+
+    #add lat & lng fields to latlng group
+    configure :latitude do
+      group :latlng
+    end
+    configure :longitude do
+      group :latlng
+    end
+
+    #add tag fields to tags group
+    configure :tag_atmospheres do
+      label 'Atmosphere'
+      group :tags
+    end
+    configure :tag_best_fors do
+      label 'Best For'
+      group :tags
+    end
+
+    #add other fields to attrib group
+    configure :reservations do
+      label 'Reservations Accepted?'
+      group :attrib
+    end
+    configure :reservations_link do
+      label 'Reservations Link'
+      help ''
+      group :attrib
+    end
+    configure :food do
+      label 'Serves Food?'
+      group :attrib
+    end
+    configure :outdoor do
+      label 'Outdoor Area?'
+      group :attrib
+    end
+    configure :price do
+      help 'Think: 1=$, 2=$$, 3=$$$, 4=$$$$'
+      group :attrib
+    end
+    configure :tt_article do
+      label 'Tasting Table Article Link'
+      help ''
+      group :attrib
+    end
+    configure :tt_date do
+      label 'Tasting Table Review Date'
+      help ''
+      group :attrib
+    end
+
+  end
 end
