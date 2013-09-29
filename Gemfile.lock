@@ -186,6 +186,7 @@ DEPENDENCIES
   better_errors
   coffee-rails (~> 4.0.0)
   devise
+  geokit
   geokit-rails
   jbuilder (~> 1.2)
   jquery-rails

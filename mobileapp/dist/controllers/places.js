@@ -3,12 +3,13 @@
 
   placesApp = angular.module("placesApp", ["PlacesModel", "hmTouchevents"]);
 
-  placesApp.controller("NearbyCtrl", function($scope, PlacesRestangular) {
+  placesApp.controller("NearbyCtrl", function($scope) {
     var displayResults, onError, onSuccess;
     $scope.placeType = 'places';
     $scope.lat = 0.0;
     $scope.lng = 0.0;
     $scope.locationText = "";
+    $scope.latSearch = true;
     onError = function(error) {
       return navigator.notification.alert("Couldn't get your location: " + error.message);
     };
@@ -18,9 +19,11 @@
       return displayResults();
     };
     $scope.nearbyCurrent = function() {
+      $scope.latSearch = true;
       return navigator.geolocation.getCurrentPosition(onSuccess, onError);
     };
     $scope.nearbyText = function() {
+      $scope.latSearch = false;
       if ($scope.locationText.length === 0) {
         return navigator.notification.alert("Please enter a location (address/zip/city/etc.)");
       } else {
@@ -29,10 +32,10 @@
     };
     return displayResults = function() {
       var params, webView;
-      if ($scope.lat !== 0.0) {
+      if ($scope.latSearch) {
         params = "lat=" + $scope.lat + "&lng=" + $scope.lng;
       } else {
-        params = "loctext=" + $scope.locationText;
+        params = "loctext=" + (encodeURIComponent($scope.locationText));
       }
       webView = new steroids.views.WebView("/views/places/list.html?placeType=" + $scope.placeType + "&" + params);
       return steroids.layers.push({
@@ -44,6 +47,7 @@
 
   placesApp.controller("ListCtrl", function($scope, PlacesRestangular) {
     var places;
+    $scope.searchRadius = 10;
     $scope.places = [];
     $scope.open = function(id) {
       var webView;
@@ -60,11 +64,12 @@
         params = {
           lat: steroids.view.params.lat,
           lng: steroids.view.params.lng,
-          rad: 10
+          rad: $scope.searchRadius
         };
       } else {
         params = {
-          text: steroids.view.params.loctext
+          text: decodeURIComponent(steroids.view.params.loctext),
+          rad: $scope.searchRadius
         };
       }
       return places.customGETLIST("near", params).then(function(data) {

@@ -49,6 +49,7 @@ gem 'rails_admin'
 gem 'devise'
 
 # Use GeoKit to locate nearby places
+gem 'geokit'
 gem 'geokit-rails'
 
 # Use Capistrano for deployment

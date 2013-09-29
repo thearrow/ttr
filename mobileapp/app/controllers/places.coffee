@@ -5,11 +5,12 @@ placesApp = angular.module("placesApp", ["PlacesModel", "hmTouchevents"])
 
 
 # Nearby: http://localhost/views/places/nearby.html
-placesApp.controller "NearbyCtrl", ($scope, PlacesRestangular) ->
+placesApp.controller "NearbyCtrl", ($scope) ->
   $scope.placeType = 'places'
   $scope.lat = 0.0
   $scope.lng = 0.0
   $scope.locationText = ""
+  $scope.latSearch = true
 
   onError = (error) ->
     navigator.notification.alert "Couldn't get your location: " + error.message
@@ -19,19 +20,21 @@ placesApp.controller "NearbyCtrl", ($scope, PlacesRestangular) ->
     displayResults()
 
   $scope.nearbyCurrent = ->
+    $scope.latSearch = true
     navigator.geolocation.getCurrentPosition onSuccess, onError
 
   $scope.nearbyText = ->
+    $scope.latSearch = false
     if $scope.locationText.length == 0
       navigator.notification.alert "Please enter a location (address/zip/city/etc.)"
     else
       displayResults()
 
   displayResults = ->
-    if $scope.lat != 0.0
+    if $scope.latSearch
       params = "lat=#{$scope.lat}&lng=#{$scope.lng}"
     else
-      params = "loctext=#{$scope.locationText}"
+      params = "loctext=#{encodeURIComponent($scope.locationText)}"
     webView = new steroids.views.WebView("/views/places/list.html?placeType=#{$scope.placeType}&#{params}")
     steroids.layers.push
       view: webView
@@ -40,8 +43,9 @@ placesApp.controller "NearbyCtrl", ($scope, PlacesRestangular) ->
 
 # List: http://localhost/views/places/list.html?placeType=<type>&lat=<lat>&lng=<lng>
 placesApp.controller "ListCtrl", ($scope, PlacesRestangular) ->
+  $scope.searchRadius = 10 #miles
 
-  # This will be populated with Restangular
+# This will be populated with Restangular
   $scope.places = []
 
   # Helper function for opening new webviews
@@ -55,9 +59,9 @@ placesApp.controller "ListCtrl", ($scope, PlacesRestangular) ->
   $scope.loadPlaces = ->
     $scope.loading = true
     if steroids.view.params.lat
-      params = {lat: steroids.view.params.lat, lng: steroids.view.params.lng, rad: 10}
+      params = {lat: steroids.view.params.lat, lng: steroids.view.params.lng, rad: $scope.searchRadius}
     else
-      params = {text: steroids.view.params.loctext}
+      params = {text: decodeURIComponent(steroids.view.params.loctext), rad: $scope.searchRadius}
     places.customGETLIST("near", params).then (data) ->
       $scope.places = data
       $scope.loading = false
