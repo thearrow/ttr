@@ -8,8 +8,9 @@
     $scope.placeType = 'places';
     $scope.lat = 0.0;
     $scope.lng = 0.0;
+    $scope.locationText = "";
     onError = function(error) {
-      return alert("Couldn't get your location: " + error.message);
+      return navigator.notification.alert("Couldn't get your location: " + error.message);
     };
     onSuccess = function(position) {
       $scope.lat = position.coords.latitude;
@@ -19,12 +20,21 @@
     $scope.nearbyCurrent = function() {
       return navigator.geolocation.getCurrentPosition(onSuccess, onError);
     };
-    $scope.nearbyZip = function() {
-      return alert("ZIP!");
+    $scope.nearbyText = function() {
+      if ($scope.locationText.length === 0) {
+        return navigator.notification.alert("Please enter a location (address/zip/city/etc.)");
+      } else {
+        return displayResults();
+      }
     };
     return displayResults = function() {
-      var webView;
-      webView = new steroids.views.WebView("/views/places/list.html?placeType=" + $scope.placeType + "&lat=" + $scope.lat + "&lng=" + $scope.lng);
+      var params, webView;
+      if ($scope.lat !== 0.0) {
+        params = "lat=" + $scope.lat + "&lng=" + $scope.lng;
+      } else {
+        params = "loctext=" + $scope.locationText;
+      }
+      webView = new steroids.views.WebView("/views/places/list.html?placeType=" + $scope.placeType + "&" + params);
       return steroids.layers.push({
         view: webView,
         navigationBar: false
@@ -46,12 +56,18 @@
     $scope.loadPlaces = function() {
       var params;
       $scope.loading = true;
-      params = steroids.view.params;
-      return places.customGETLIST("near", {
-        lat: params.lat,
-        lng: params.lng,
-        rad: 10
-      }).then(function(data) {
+      if (steroids.view.params.lat) {
+        params = {
+          lat: steroids.view.params.lat,
+          lng: steroids.view.params.lng,
+          rad: 10
+        };
+      } else {
+        params = {
+          text: steroids.view.params.loctext
+        };
+      }
+      return places.customGETLIST("near", params).then(function(data) {
         $scope.places = data;
         return $scope.loading = false;
       });

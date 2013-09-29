@@ -68,8 +68,9 @@
             <button class="topcoat-button centered" hm-tap="nearbyCurrent()">My Current Location</button>
             <p>-OR-</p>
             <div class="centered">
-                <input type="text" class="topcoat-text-input" placeholder="Address / City / Zip ..." value="">
-                <button class="topcoat-button" hm-tap="nearbyZip()">Go</button>
+                <input type="text" class="topcoat-text-input" ng-model="locationText"
+                       placeholder="Address / City / Zip ..." value="">
+                <button class="topcoat-button" hm-tap="nearbyText()">Go</button>
             </div>
         </div>
 

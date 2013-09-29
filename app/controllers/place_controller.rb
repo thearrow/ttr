@@ -1,4 +1,5 @@
 class PlaceController < ApplicationController
+  include Geokit::Geocoders
 
   #GET /{place_type}
   # eg. /places OR /restaurants OR /bars
@@ -17,9 +18,16 @@ class PlaceController < ApplicationController
   # lat = latitude of origin to search from
   # lng = longitude of origin to search from
   # rad = radius to search in (miles)
+  # text = address/zip/city/etc to search from
   # distance calculated from lat&long using Haversine Formula
   def near
-    @places = place_type.within(params[:rad], :origin => [params[:lat], params[:lng]])
+    if params[:lat] and params[:lng]
+      lat, lng = params[:lat], params[:lng]
+    else
+      coords = MultiGeocoder.geocode(params[:text])
+      lat, lng = coords.lat, coords.lng
+    end
+    @places = place_type.within(params[:rad], :origin => [lat, lng])
     render json: @places
   end
 

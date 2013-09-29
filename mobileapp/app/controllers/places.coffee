@@ -9,9 +9,10 @@ placesApp.controller "NearbyCtrl", ($scope, PlacesRestangular) ->
   $scope.placeType = 'places'
   $scope.lat = 0.0
   $scope.lng = 0.0
+  $scope.locationText = ""
 
   onError = (error) ->
-    alert "Couldn't get your location: " + error.message
+    navigator.notification.alert "Couldn't get your location: " + error.message
   onSuccess = (position) ->
     $scope.lat = position.coords.latitude
     $scope.lng = position.coords.longitude
@@ -20,12 +21,18 @@ placesApp.controller "NearbyCtrl", ($scope, PlacesRestangular) ->
   $scope.nearbyCurrent = ->
     navigator.geolocation.getCurrentPosition onSuccess, onError
 
-  $scope.nearbyZip = ->
-    alert "ZIP!"
+  $scope.nearbyText = ->
+    if $scope.locationText.length == 0
+      navigator.notification.alert "Please enter a location (address/zip/city/etc.)"
+    else
+      displayResults()
 
   displayResults = ->
-    webView = new steroids.views.WebView(
-      "/views/places/list.html?placeType=#{$scope.placeType}&lat=#{$scope.lat}&lng=#{$scope.lng}")
+    if $scope.lat != 0.0
+      params = "lat=#{$scope.lat}&lng=#{$scope.lng}"
+    else
+      params = "loctext=#{$scope.locationText}"
+    webView = new steroids.views.WebView("/views/places/list.html?placeType=#{$scope.placeType}&#{params}")
     steroids.layers.push
       view: webView
       navigationBar: false
@@ -47,10 +54,14 @@ placesApp.controller "ListCtrl", ($scope, PlacesRestangular) ->
   # Helper function for loading places data with spinner
   $scope.loadPlaces = ->
     $scope.loading = true
-    params = steroids.view.params
-    places.customGETLIST("near", {lat: params.lat, lng: params.lng, rad: 10}).then (data) ->
+    if steroids.view.params.lat
+      params = {lat: steroids.view.params.lat, lng: steroids.view.params.lng, rad: 10}
+    else
+      params = {text: steroids.view.params.loctext}
+    places.customGETLIST("near", params).then (data) ->
       $scope.places = data
       $scope.loading = false
+
 
   # Search for nearby places from the backend (all places, restaurants only, bars only, etc.)
   # (defaults to 10-mile radius)
