@@ -4,8 +4,8 @@ class PlaceController < ApplicationController
   #GET /{place_type}
   # eg. /places OR /restaurants OR /bars
   def index
-    @places = place_type.all
-    render json: @places
+    @places = place_type.all.includes([:tag_atmospheres, :tag_best_fors])
+    render json: @places.to_json(include: [:tag_atmospheres, :tag_best_fors])
   end
 
   #GET /{place_type}/{id}
@@ -29,9 +29,12 @@ class PlaceController < ApplicationController
       coords = MultiGeocoder.geocode(params[:text])
       lat, lng = coords.lat, coords.lng
     end
-    @places = place_type.within(params[:rad], origin: [lat, lng])
-    @places.sort! {|a,b| a.distance_to([lat,lng]) <=> b.distance_to([lat,lng])}
-    render json: @places.to_json(include: [:tag_atmospheres, :tag_best_fors])
+    results = Rails.cache.fetch "/#{place_type}/near?lat=#{lat}&lng=#{lng}&rad=#{params[:rad]}" do
+      places = place_type.within(params[:rad], origin: [lat, lng]).includes([:tag_atmospheres, :tag_best_fors])
+      places.sort! {|a,b| a.distance_to([lat,lng]) <=> b.distance_to([lat,lng])}
+      places.to_json(include: [:tag_atmospheres, :tag_best_fors])
+    end
+    render json: results
   end
 
 private

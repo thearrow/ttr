@@ -10,6 +10,7 @@ class Place < ActiveRecord::Base
                    :lng_column_name => :longitude
 
   before_update :address_to_coords
+  after_commit :clear_entire_cache
 
   def address_to_coords
     if self.latitude.nil? or self.longitude.nil?
@@ -19,4 +20,7 @@ class Place < ActiveRecord::Base
     end
   end
 
+  def clear_entire_cache
+    Rails.cache.clear
+  end
 end
