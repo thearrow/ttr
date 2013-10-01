@@ -31,7 +31,7 @@ class PlaceController < ApplicationController
     end
     @places = place_type.within(params[:rad], origin: [lat, lng])
     @places.sort! {|a,b| a.distance_to([lat,lng]) <=> b.distance_to([lat,lng])}
-    render json: @places
+    render json: @places.to_json(include: [:tag_atmospheres, :tag_best_fors])
   end
 
 private

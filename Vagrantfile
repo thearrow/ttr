@@ -22,6 +22,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.network :forwarded_port, guest: 3000, host: 3000    #rails
   config.vm.network :forwarded_port, guest: 13303, host: 13303  #steroids
   config.vm.network :forwarded_port, guest: 4567, host: 4567    #steroids
+  config.vm.network :forwarded_port, guest: 4000, host: 4000    #steroids
+  config.vm.network :forwarded_port, guest: 31173, host: 31173  #steroids
 
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.

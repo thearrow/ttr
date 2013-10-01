@@ -31,8 +31,7 @@ Restaurant.create(
     },
     {
         name: 'Cap City Fine Diner and Bar',
-        description: "As with any diner, you feel immediately comfortable and at ease.
-                      Like no other diner, it's artsy and cool.",
+        description: "As with any diner, you feel immediately comfortable and at ease. Like no other diner, it's artsy and cool.",
         url: 'http://www.capcityfinediner.com',
         street: '1299 Olentangy River Rd',
         city: 'Columbus',
@@ -92,9 +91,7 @@ Bar.create(
     },
     {
         name: 'The Little Bar',
-        description: 'With daily drink specials and live entertainment,
-                      The Little Bar is your spot to catch your favorite sporting event,
-                      get together with friends or have a long night out.',
+        description: 'The Little Bar is your spot to catch your favorite sporting event, get together with friends or have a long night out.',
         url: 'http://www.thelittlebar.com',
         street: '2195 N. High St.',
         city: 'Columbus',
