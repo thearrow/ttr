@@ -125,6 +125,32 @@
     };
   });
 
-  placesApp.controller("SearchCtrl", function($scope, PlacesRestangular) {});
+  placesApp.controller("SearchCtrl", function($scope, PlacesRestangular) {
+    var displayResults;
+    $scope.search = function() {
+      return $scope.fetchPlaces();
+    };
+    $scope.fetchPlaces = function() {
+      var params, places;
+      $scope.loading = true;
+      places = PlacesRestangular.all('places');
+      params = {
+        text: $scope.searchText
+      };
+      return places.customGETLIST("search", params).then(function(data) {
+        localStorage.setItem('places', JSON.stringify(data));
+        $scope.loading = false;
+        return displayResults();
+      });
+    };
+    return displayResults = function() {
+      var webView;
+      webView = new steroids.views.WebView("/views/places/list.html");
+      return steroids.layers.push({
+        view: webView,
+        navigationBar: false
+      });
+    };
+  });
 
 }).call(this);

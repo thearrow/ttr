@@ -41,7 +41,10 @@
         <div class="spinner" ng-show="loading"></div>
 
         <div>
-            <input type="search" class="topcoat-search-input" placeholder="Name of Restaurant/Bar...">
+            <form ng-submit="search()">
+                <input type="search" ng-model="searchText"
+                       class="topcoat-search-input" placeholder="Name of Restaurant/Bar...">
+            </form>
         </div>
 
 

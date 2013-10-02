@@ -109,3 +109,21 @@ placesApp.controller "ShowCtrl", ($scope) ->
 
 # Search: http://localhost/views/places/search.html
 placesApp.controller "SearchCtrl", ($scope, PlacesRestangular) ->
+
+  $scope.search = ->
+    $scope.fetchPlaces()
+
+  $scope.fetchPlaces = ->
+    $scope.loading = true
+    places = PlacesRestangular.all('places')
+    params = {text: $scope.searchText}
+    places.customGETLIST("search", params).then (data) ->
+      localStorage.setItem 'places', JSON.stringify(data)
+      $scope.loading = false
+      displayResults()
+
+  displayResults = ->
+    webView = new steroids.views.WebView("/views/places/list.html")
+    steroids.layers.push
+      view: webView
+      navigationBar: false
