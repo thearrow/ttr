@@ -48,7 +48,6 @@
         };
       }
       return places.customGETLIST("near", params).then(function(data) {
-        localStorage.clear();
         localStorage.setItem('places', JSON.stringify(data));
         $scope.loading = false;
         return displayResults();
