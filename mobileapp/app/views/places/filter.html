@@ -1,23 +1,26 @@
 <div ng-app="placesApp">
 
-    <div ng-controller="NearbyCtrl">
+    <div ng-controller="ListCtrl">
+
+        <div style="margin-top: 20px;"></div>
 
         <div class="topcoat-navigation-bar">
             <div class="topcoat-navigation-bar__item left quarter">
             </div>
 
             <div class="topcoat-navigation-bar__item center half">
-                <h1 class="topcoat-navigation-bar__title">Nearby</h1>
+                <h1 class="topcoat-navigation-bar__title">Filter</h1>
             </div>
 
             <div class="topcoat-navigation-bar__item right quarter">
+                <button class="topcoat-icon-button" hm-tap="hideFilter()">
+                    <span class="topcoat-icon icon-close"></span>
+                </button>
             </div>
         </div>
 
-        <div class="spinner" ng-show="loading"></div>
-
         <div class="nearby-container">
-            <p>I want to find:</p>
+            <p>Type:</p>
             <div class="topcoat-button-bar">
                 <label class="topcoat-button-bar__item">
                     <input type="radio" ng-model="type" value="places">
@@ -33,16 +36,24 @@
                 </label>
             </div>
 
-            <p>Near:</p>
-            <button class="topcoat-button" hm-tap="nearbyCurrent()">My Current Location</button>
-            <p>-OR-</p>
-            <div>
-                <form ng-submit="nearbyText()">
-                    <input type="text" class="topcoat-text-input" ng-model="locationText"
-                           placeholder="Address / City / Zip ...">
-                    <button class="topcoat-button">Go</button>
-                </form>
+            <p>Sort By:</p>
+
+            <p>Max Distance:</p>
+            <div class="topcoat-button-bar">
+                <label class="topcoat-button-bar__item">
+                    <input type="radio" ng-model="rad" value="5">
+                    <button class="topcoat-button-bar__button">5 mi</button>
+                </label>
+                <label class="topcoat-button-bar__item">
+                    <input type="radio" ng-model="rad" value="10">
+                    <button class="topcoat-button-bar__button">10 mi</button>
+                </label>
+                <label class="topcoat-button-bar__item">
+                    <input type="radio" ng-model="rad" value="20">
+                    <button class="topcoat-button-bar__button">20 mi</button>
+                </label>
             </div>
+
         </div>
 
     </div>

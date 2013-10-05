@@ -5,17 +5,14 @@ placesApp = angular.module("placesApp", ["PlacesModel", "hmTouchevents"])
 
 
 # Nearby: http://localhost/views/places/nearby.html
-placesApp.controller "NearbyCtrl", ($scope, PlacesRestangular) ->
-  $scope.placeType = 'places'
+placesApp.controller "NearbyCtrl", ($scope) ->
+  $scope.type = 'places'
   $scope.lat = 0.0
   $scope.lng = 0.0
+  $scope.rad = 10 #miles
   $scope.locationText = ""
-  $scope.latSearch = true
-  $scope.searchRadius = 10 #miles
 
   $scope.nearbyCurrent = ->
-    $scope.loading = true
-    $scope.latSearch = true
     navigator.geolocation.getCurrentPosition onSuccess, onError
 
   onError = (error) ->
@@ -23,38 +20,51 @@ placesApp.controller "NearbyCtrl", ($scope, PlacesRestangular) ->
   onSuccess = (position) ->
     $scope.lat = position.coords.latitude
     $scope.lng = position.coords.longitude
-    $scope.fetchPlaces()
+    displayResults()
 
   $scope.nearbyText = ->
-    $scope.loading = true
-    $scope.latSearch = false
     if $scope.locationText.length == 0
       navigator.notification.alert "Please enter a location (address/zip/city/etc.)"
     else
-      $scope.fetchPlaces()
+      geocodeAddress()
 
-  $scope.fetchPlaces = ->
-    places = PlacesRestangular.all($scope.placeType)
-    if $scope.latSearch
-      params = {lat: $scope.lat, lng: $scope.lng, rad: $scope.searchRadius}
-    else
-      params = {text: $scope.locationText, rad: $scope.searchRadius}
-    places.customGETLIST("near", params).then (data) ->
-      localStorage.setItem 'places', JSON.stringify(data)
-      displayResults()
+  geocodeAddress = ->
+    geocoder = new google.maps.Geocoder()
+    geocoder.geocode
+      address: $scope.locationText
+    , (results, status) ->
+      if status is google.maps.GeocoderStatus.OK
+        $scope.lat = results[0].geometry.location.lat()
+        $scope.lng = results[0].geometry.location.lng()
+        displayResults()
+      else
+        console.log status
 
   displayResults = ->
-    $scope.loading = false
-    webView = new steroids.views.WebView("/views/places/list.html")
+    params = "?placetype=#{$scope.type}&lat=#{$scope.lat}&lng=#{$scope.lng}&rad=#{$scope.rad}"
+    webView = new steroids.views.WebView("/views/places/list.html" + params)
     steroids.layers.push
       view: webView
       navigationBar: false
 
 
-# List: http://localhost/views/places/list.html?placeType=<type>&lat=<lat>&lng=<lng>
-placesApp.controller "ListCtrl", ($scope) ->
-  # This is populated by NearbyCtrl or SearchCtrl
-  $scope.places = JSON.parse localStorage.getItem('places')
+# List: http://localhost/views/places/list.html?type=<type>&lat=<lat>&lng=<lng>
+placesApp.controller "ListCtrl", ($scope, PlacesRestangular) ->
+  $scope.places = []
+  $scope.type = steroids.view.params.placetype
+  $scope.lat = steroids.view.params.lat
+  $scope.lng = steroids.view.params.lng
+  $scope.rad = steroids.view.params.rad  #extract these to angular service?
+
+  $scope.fetchPlaces = ->
+    $scope.loading = true
+    places = PlacesRestangular.all($scope.type)
+    params = {lat: $scope.lat, lng: $scope.lng, rad: $scope.rad}
+    places.customGETLIST("near", params).then (data) ->
+      localStorage.setItem 'places', JSON.stringify(data)
+      $scope.places = data
+      $scope.loading = false
+  $scope.fetchPlaces()
 
   # Helper function for opening new webviews
   $scope.open = (id) ->
@@ -63,8 +73,13 @@ placesApp.controller "ListCtrl", ($scope) ->
       view: webView
       navigationBar: false
 
-  $scope.filter = ->
-    navigator.notification.alert 'filter me, yo.'
+  $scope.showFilter = ->
+    filterView = new steroids.views.WebView("/views/places/filter.html")
+    steroids.modal.show(filterView)
+
+  $scope.hideFilter = ->
+    steroids.modal.hide()
+    $scope.fetchPlaces()
 
   $scope.map = ->
     flip = new steroids.Animation("flipHorizontalFromRight")

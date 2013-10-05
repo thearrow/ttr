@@ -10,18 +10,15 @@
 
   <script src="/appgyver/cordova.js"></script>
   <script src="/components/steroids-js/steroids.js"></script>
-
-
   <script src="/components/angular/angular.min.js"></script>
-
   <script src="/components/underscore/underscore-min.js"></script>
   <script src="/components/restangular/dist/restangular.min.js"></script>
-
   <script src="/vendor/hammerjs/hammer.min.js"></script>
   <script src="/vendor/angular-hammer/angular-hammer.js"></script>
 
-  <script src="/models/models.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true"></script>
 
+  <script src="/models/models.js"></script>
   <script src="/controllers/application.js"></script>
   <script src="/controllers/places.js"></script>
 </head>
@@ -34,8 +31,8 @@
 
         <div class="topcoat-navigation-bar">
             <div class="topcoat-navigation-bar__item left quarter">
-                <button class="topcoat-icon-button--quiet" hm-tap="goBack()">
-                    <span class="topcoat-icon topcoat-icon--back icon-back"></span>
+                <button class="topcoat-icon-button" hm-tap="goBack()">
+                    <span class="topcoat-icon icon-back"></span>
                 </button>
             </div>
             <div class="topcoat-navigation-bar__item center half">

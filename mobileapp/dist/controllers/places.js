@@ -3,17 +3,14 @@
 
   placesApp = angular.module("placesApp", ["PlacesModel", "hmTouchevents"]);
 
-  placesApp.controller("NearbyCtrl", function($scope, PlacesRestangular) {
-    var displayResults, onError, onSuccess;
-    $scope.placeType = 'places';
+  placesApp.controller("NearbyCtrl", function($scope) {
+    var displayResults, geocodeAddress, onError, onSuccess;
+    $scope.type = 'places';
     $scope.lat = 0.0;
     $scope.lng = 0.0;
+    $scope.rad = 10;
     $scope.locationText = "";
-    $scope.latSearch = true;
-    $scope.searchRadius = 10;
     $scope.nearbyCurrent = function() {
-      $scope.loading = true;
-      $scope.latSearch = true;
       return navigator.geolocation.getCurrentPosition(onSuccess, onError);
     };
     onError = function(error) {
@@ -22,41 +19,34 @@
     onSuccess = function(position) {
       $scope.lat = position.coords.latitude;
       $scope.lng = position.coords.longitude;
-      return $scope.fetchPlaces();
+      return displayResults();
     };
     $scope.nearbyText = function() {
-      $scope.loading = true;
-      $scope.latSearch = false;
       if ($scope.locationText.length === 0) {
         return navigator.notification.alert("Please enter a location (address/zip/city/etc.)");
       } else {
-        return $scope.fetchPlaces();
+        return geocodeAddress();
       }
     };
-    $scope.fetchPlaces = function() {
-      var params, places;
-      places = PlacesRestangular.all($scope.placeType);
-      if ($scope.latSearch) {
-        params = {
-          lat: $scope.lat,
-          lng: $scope.lng,
-          rad: $scope.searchRadius
-        };
-      } else {
-        params = {
-          text: $scope.locationText,
-          rad: $scope.searchRadius
-        };
-      }
-      return places.customGETLIST("near", params).then(function(data) {
-        localStorage.setItem('places', JSON.stringify(data));
-        return displayResults();
+    geocodeAddress = function() {
+      var geocoder;
+      geocoder = new google.maps.Geocoder();
+      return geocoder.geocode({
+        address: $scope.locationText
+      }, function(results, status) {
+        if (status === google.maps.GeocoderStatus.OK) {
+          $scope.lat = results[0].geometry.location.lat();
+          $scope.lng = results[0].geometry.location.lng();
+          return displayResults();
+        } else {
+          return console.log(status);
+        }
       });
     };
     return displayResults = function() {
-      var webView;
-      $scope.loading = false;
-      webView = new steroids.views.WebView("/views/places/list.html");
+      var params, webView;
+      params = "?placetype=" + $scope.type + "&lat=" + $scope.lat + "&lng=" + $scope.lng + "&rad=" + $scope.rad;
+      webView = new steroids.views.WebView("/views/places/list.html" + params);
       return steroids.layers.push({
         view: webView,
         navigationBar: false
@@ -64,8 +54,28 @@
     };
   });
 
-  placesApp.controller("ListCtrl", function($scope) {
-    $scope.places = JSON.parse(localStorage.getItem('places'));
+  placesApp.controller("ListCtrl", function($scope, PlacesRestangular) {
+    $scope.places = [];
+    $scope.type = steroids.view.params.placetype;
+    $scope.lat = steroids.view.params.lat;
+    $scope.lng = steroids.view.params.lng;
+    $scope.rad = steroids.view.params.rad;
+    $scope.fetchPlaces = function() {
+      var params, places;
+      $scope.loading = true;
+      places = PlacesRestangular.all($scope.type);
+      params = {
+        lat: $scope.lat,
+        lng: $scope.lng,
+        rad: $scope.rad
+      };
+      return places.customGETLIST("near", params).then(function(data) {
+        localStorage.setItem('places', JSON.stringify(data));
+        $scope.places = data;
+        return $scope.loading = false;
+      });
+    };
+    $scope.fetchPlaces();
     $scope.open = function(id) {
       var webView;
       webView = new steroids.views.WebView("/views/places/show.html?id=" + id);
@@ -74,8 +84,14 @@
         navigationBar: false
       });
     };
-    $scope.filter = function() {
-      return navigator.notification.alert('filter me, yo.');
+    $scope.showFilter = function() {
+      var filterView;
+      filterView = new steroids.views.WebView("/views/places/filter.html");
+      return steroids.modal.show(filterView);
+    };
+    $scope.hideFilter = function() {
+      steroids.modal.hide();
+      return $scope.fetchPlaces();
     };
     $scope.map = function() {
       var flip, webView;
