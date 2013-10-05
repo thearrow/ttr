@@ -12,6 +12,7 @@
     $scope.latSearch = true;
     $scope.searchRadius = 10;
     $scope.nearbyCurrent = function() {
+      $scope.loading = true;
       $scope.latSearch = true;
       return navigator.geolocation.getCurrentPosition(onSuccess, onError);
     };
@@ -24,6 +25,7 @@
       return $scope.fetchPlaces();
     };
     $scope.nearbyText = function() {
+      $scope.loading = true;
       $scope.latSearch = false;
       if ($scope.locationText.length === 0) {
         return navigator.notification.alert("Please enter a location (address/zip/city/etc.)");
@@ -33,7 +35,6 @@
     };
     $scope.fetchPlaces = function() {
       var params, places;
-      $scope.loading = true;
       places = PlacesRestangular.all($scope.placeType);
       if ($scope.latSearch) {
         params = {
@@ -49,12 +50,12 @@
       }
       return places.customGETLIST("near", params).then(function(data) {
         localStorage.setItem('places', JSON.stringify(data));
-        $scope.loading = false;
         return displayResults();
       });
     };
     return displayResults = function() {
       var webView;
+      $scope.loading = false;
       webView = new steroids.views.WebView("/views/places/list.html");
       return steroids.layers.push({
         view: webView,
@@ -73,7 +74,10 @@
         navigationBar: false
       });
     };
-    $scope.goToMap = function() {
+    $scope.filter = function() {
+      return navigator.notification.alert('filter me, yo.');
+    };
+    $scope.map = function() {
       var flip, webView;
       flip = new steroids.Animation("flipHorizontalFromRight");
       webView = new steroids.views.WebView("/views/places/map.html");
@@ -83,7 +87,7 @@
         animation: flip
       });
     };
-    return $scope.goBack = function() {
+    return $scope.back = function() {
       return steroids.layers.pop();
     };
   });
@@ -98,10 +102,13 @@
         navigationBar: false
       });
     };
-    $scope.goToList = function() {
-      return steroids.layers.pop();
+    $scope.filter = function() {
+      return navigator.notification.alert('filter me, yo.');
     };
-    return $scope.goBack = function() {
+    $scope.list = function() {
+      return $scope.back();
+    };
+    return $scope.back = function() {
       return steroids.layers.pop();
     };
   });

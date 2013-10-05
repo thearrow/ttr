@@ -14,6 +14,7 @@ placesApp.controller "NearbyCtrl", ($scope, PlacesRestangular) ->
   $scope.searchRadius = 10 #miles
 
   $scope.nearbyCurrent = ->
+    $scope.loading = true
     $scope.latSearch = true
     navigator.geolocation.getCurrentPosition onSuccess, onError
 
@@ -25,6 +26,7 @@ placesApp.controller "NearbyCtrl", ($scope, PlacesRestangular) ->
     $scope.fetchPlaces()
 
   $scope.nearbyText = ->
+    $scope.loading = true
     $scope.latSearch = false
     if $scope.locationText.length == 0
       navigator.notification.alert "Please enter a location (address/zip/city/etc.)"
@@ -32,7 +34,6 @@ placesApp.controller "NearbyCtrl", ($scope, PlacesRestangular) ->
       $scope.fetchPlaces()
 
   $scope.fetchPlaces = ->
-    $scope.loading = true
     places = PlacesRestangular.all($scope.placeType)
     if $scope.latSearch
       params = {lat: $scope.lat, lng: $scope.lng, rad: $scope.searchRadius}
@@ -40,10 +41,10 @@ placesApp.controller "NearbyCtrl", ($scope, PlacesRestangular) ->
       params = {text: $scope.locationText, rad: $scope.searchRadius}
     places.customGETLIST("near", params).then (data) ->
       localStorage.setItem 'places', JSON.stringify(data)
-      $scope.loading = false
       displayResults()
 
   displayResults = ->
+    $scope.loading = false
     webView = new steroids.views.WebView("/views/places/list.html")
     steroids.layers.push
       view: webView
@@ -62,7 +63,10 @@ placesApp.controller "ListCtrl", ($scope) ->
       view: webView
       navigationBar: false
 
-  $scope.goToMap = ->
+  $scope.filter = ->
+    navigator.notification.alert 'filter me, yo.'
+
+  $scope.map = ->
     flip = new steroids.Animation("flipHorizontalFromRight")
     webView = new steroids.views.WebView("/views/places/map.html")
     steroids.layers.push
@@ -70,7 +74,7 @@ placesApp.controller "ListCtrl", ($scope) ->
       navigationBar: false
       animation: flip
 
-  $scope.goBack = ->
+  $scope.back = ->
     steroids.layers.pop()
 
 
@@ -87,10 +91,13 @@ placesApp.controller "MapCtrl", ($scope) ->
       view: webView
       navigationBar: false
 
-  $scope.goToList = ->
-    steroids.layers.pop()
+  $scope.filter = ->
+    navigator.notification.alert 'filter me, yo.'
 
-  $scope.goBack = ->
+  $scope.list = ->
+    $scope.back()
+
+  $scope.back = ->
     steroids.layers.pop()
 
 

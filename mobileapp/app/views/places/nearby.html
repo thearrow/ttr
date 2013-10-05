@@ -18,31 +18,30 @@
 
         <div class="nearby-container">
             <p>I want to find:</p>
-            <div class="nearby-radio-container">
-                <label class="topcoat-radio-button">
-                    <input type="radio" ng-model="placeType" value="places" checked>
-                    <div class="topcoat-radio-button__checkmark"></div>
-                    All
+            <div class="topcoat-button-bar">
+                <label class="topcoat-button-bar__item">
+                    <input type="radio" ng-model="placeType" value="places">
+                    <button class="topcoat-button-bar__button">All</button>
                 </label>
-                <label class="topcoat-radio-button">
+                <label class="topcoat-button-bar__item">
                     <input type="radio" ng-model="placeType" value="restaurants">
-                    <div class="topcoat-radio-button__checkmark"></div>
-                    Restaurants
+                    <button class="topcoat-button-bar__button">Restaurants</button>
                 </label>
-                <label class="topcoat-radio-button">
+                <label class="topcoat-button-bar__item">
                     <input type="radio" ng-model="placeType" value="bars">
-                    <div class="topcoat-radio-button__checkmark"></div>
-                    Bars
+                    <button class="topcoat-button-bar__button">Bars</button>
                 </label>
             </div>
 
             <p>Near:</p>
-            <button class="topcoat-button centered" hm-tap="nearbyCurrent()">My Current Location</button>
+            <button class="topcoat-button" hm-tap="nearbyCurrent()">My Current Location</button>
             <p>-OR-</p>
-            <div class="centered">
-                <input type="text" class="topcoat-text-input" ng-model="locationText"
-                       placeholder="Address / City / Zip ..." value="">
-                <button class="topcoat-button" hm-tap="nearbyText()">Go</button>
+            <div>
+                <form ng-submit="nearbyText()">
+                    <input type="text" class="topcoat-text-input" ng-model="locationText"
+                           placeholder="Address / City / Zip ..." value="">
+                    <button class="topcoat-button" hm-tap="nearbyText()">Go</button>
+                </form>
             </div>
         </div>
 

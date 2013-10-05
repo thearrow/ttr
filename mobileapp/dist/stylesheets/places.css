@@ -24,17 +24,29 @@
 }
 
 .icon-back {
-    background-image: url("../../vendor/topcoat/svg/back_light.png");
-    background-repeat: no-repeat;
-    background-size: 14px;
+    background: url("../../vendor/topcoat/svg/back_light.png") no-repeat center;
+    background-size: 20px;
+    opacity: 0.5;
+}
+.icon-filter {
+    background: url("../../vendor/topcoat/svg/settings.png") no-repeat center;
+    background-size: 20px;
+    opacity: 0.5;
+}
+.icon-map {
+    background: url("../../vendor/topcoat/svg/location.png") no-repeat center;
+    background-size: 20px;
+    opacity: 0.5;
+}
+.icon-list {
+    background: url("../../vendor/topcoat/svg/listview.png") no-repeat center;
+    background-size: 20px;
     opacity: 0.5;
 }
 
 
 .topcoat-search-input {
-    background-image: url("../../vendor/topcoat/svg/search.png");
-    background-position: 1em center;
-    background-repeat: no-repeat;
+    background: url("../../vendor/topcoat/svg/search.png") no-repeat 1em center;
     background-size: 14px;
     margin-left: auto;
     margin-right: auto;
@@ -47,9 +59,16 @@
     margin-top: 6px;
 }
 
-.nearby-container p, .centered{
+.nearby-container{
     display: block;
     text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.nearby-container .topcoat-button-bar{
+    width: 264px;
+    display: block;
     margin-left: auto;
     margin-right: auto;
 }

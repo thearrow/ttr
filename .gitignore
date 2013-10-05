@@ -19,3 +19,4 @@
 /.vagrant/
 /vendor/bundle/
 /.sass-cache/
+*.DS_Store
