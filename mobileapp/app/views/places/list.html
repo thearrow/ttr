@@ -30,7 +30,7 @@
         <div class="topcoat-list">
             <ul class="topcoat-list__container">
                 <li class="topcoat-list__item" hm-tap="open(place.id)"
-                    ng-repeat="place in places">
+                    ng-repeat="place in places | orderBy:order">
                     {{ place.name }}
                 </li>
             </ul>

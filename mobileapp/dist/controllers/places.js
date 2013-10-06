@@ -8,7 +8,6 @@
     $scope.type = 'places';
     $scope.lat = 0.0;
     $scope.lng = 0.0;
-    $scope.rad = 10;
     $scope.locationText = "";
     $scope.nearbyCurrent = function() {
       return navigator.geolocation.getCurrentPosition(onSuccess, onError);
@@ -44,11 +43,10 @@
       });
     };
     return displayResults = function() {
-      var params, webView;
-      params = "?placetype=" + $scope.type + "&lat=" + $scope.lat + "&lng=" + $scope.lng + "&rad=" + $scope.rad;
-      webView = new steroids.views.WebView("/views/places/list.html" + params);
+      var params;
+      params = "?type=" + $scope.type + "&lat=" + $scope.lat + "&lng=" + $scope.lng + "&rad=10";
       return steroids.layers.push({
-        view: webView,
+        view: new steroids.views.WebView("/views/places/list.html" + params),
         navigationBar: false
       });
     };
@@ -56,20 +54,20 @@
 
   placesApp.controller("ListCtrl", function($scope, PlacesRestangular) {
     $scope.places = [];
-    $scope.type = steroids.view.params.placetype;
-    $scope.lat = steroids.view.params.lat;
-    $scope.lng = steroids.view.params.lng;
-    $scope.rad = steroids.view.params.rad;
+    localStorage.setItem('params', JSON.stringify(steroids.view.params));
+    window.addEventListener("message", function(msg) {
+      if (msg.data.type === "reload") {
+        $scope.order = msg.data.order;
+        return $scope.fetchPlaces();
+      }
+    });
     $scope.fetchPlaces = function() {
-      var params, places;
+      var params, places, search_or_near;
       $scope.loading = true;
-      places = PlacesRestangular.all($scope.type);
-      params = {
-        lat: $scope.lat,
-        lng: $scope.lng,
-        rad: $scope.rad
-      };
-      return places.customGETLIST("near", params).then(function(data) {
+      params = JSON.parse(localStorage.getItem('params'));
+      places = PlacesRestangular.all(params.type);
+      search_or_near = steroids.view.params.text != null ? "search" : "near";
+      return places.customGETLIST(search_or_near, params).then(function(data) {
         localStorage.setItem('places', JSON.stringify(data));
         $scope.places = data;
         return $scope.loading = false;
@@ -77,30 +75,23 @@
     };
     $scope.fetchPlaces();
     $scope.open = function(id) {
-      var webView;
-      webView = new steroids.views.WebView("/views/places/show.html?id=" + id);
       return steroids.layers.push({
-        view: webView,
+        view: new steroids.views.WebView("/views/places/show.html?id=" + id),
         navigationBar: false
       });
     };
     $scope.showFilter = function() {
-      var filterView;
-      filterView = new steroids.views.WebView("/views/places/filter.html");
-      return steroids.modal.show(filterView);
-    };
-    $scope.hideFilter = function() {
-      steroids.modal.hide();
-      return $scope.fetchPlaces();
+      return steroids.layers.push({
+        view: new steroids.views.WebView("/views/places/filter.html"),
+        navigationBar: false,
+        animation: new steroids.Animation('slideFromBottom')
+      });
     };
     $scope.map = function() {
-      var flip, webView;
-      flip = new steroids.Animation("flipHorizontalFromRight");
-      webView = new steroids.views.WebView("/views/places/map.html");
       return steroids.layers.push({
-        view: webView,
+        view: new steroids.views.WebView("/views/places/map.html"),
         navigationBar: false,
-        animation: flip
+        animation: new steroids.Animation("flipHorizontalFromRight")
       });
     };
     return $scope.back = function() {
@@ -108,21 +99,37 @@
     };
   });
 
+  placesApp.controller("FilterCtrl", function($scope) {
+    var params;
+    params = JSON.parse(localStorage.getItem('params'));
+    $scope.type = params.type;
+    $scope.rad = params.rad;
+    $scope.order = params.order || '';
+    return $scope.hideFilter = function() {
+      var msg;
+      params.type = $scope.type;
+      params.rad = $scope.rad;
+      params.order = $scope.order;
+      localStorage.setItem('params', JSON.stringify(params));
+      msg = {
+        type: 'reload',
+        order: $scope.order
+      };
+      window.postMessage(msg, "*");
+      return steroids.layers.pop();
+    };
+  });
+
   placesApp.controller("MapCtrl", function($scope) {
     $scope.places = JSON.parse(localStorage.getItem('places'));
     $scope.open = function(id) {
-      var webView;
-      webView = new steroids.views.WebView("/views/places/show.html?id=" + id);
       return steroids.layers.push({
-        view: webView,
+        view: new steroids.views.WebView("/views/places/show.html?id=" + id),
         navigationBar: false
       });
     };
     $scope.filter = function() {
       return navigator.notification.alert('filter me, yo.');
-    };
-    $scope.list = function() {
-      return $scope.back();
     };
     return $scope.back = function() {
       return steroids.layers.pop();
@@ -143,34 +150,21 @@
       }
       return _results;
     })())[0];
-    return $scope.goBack = function() {
+    return $scope.back = function() {
       return steroids.layers.pop();
     };
   });
 
-  placesApp.controller("SearchCtrl", function($scope, PlacesRestangular) {
+  placesApp.controller("SearchCtrl", function($scope) {
     var displayResults;
     $scope.search = function() {
-      return $scope.fetchPlaces();
-    };
-    $scope.fetchPlaces = function() {
-      var params, places;
-      $scope.loading = true;
-      places = PlacesRestangular.all('places');
-      params = {
-        text: $scope.searchText
-      };
-      return places.customGETLIST("search", params).then(function(data) {
-        localStorage.setItem('places', JSON.stringify(data));
-        $scope.loading = false;
-        return displayResults();
-      });
+      return displayResults();
     };
     return displayResults = function() {
-      var webView;
-      webView = new steroids.views.WebView("/views/places/list.html");
+      var params;
+      params = "?type=places&text=" + $scope.searchText + "&rad=10";
       return steroids.layers.push({
-        view: webView,
+        view: new steroids.views.WebView("/views/places/list.html" + params),
         navigationBar: false
       });
     };

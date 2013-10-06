@@ -9,7 +9,6 @@ placesApp.controller "NearbyCtrl", ($scope) ->
   $scope.type = 'places'
   $scope.lat = 0.0
   $scope.lng = 0.0
-  $scope.rad = 10 #miles
   $scope.locationText = ""
 
   $scope.nearbyCurrent = ->
@@ -41,26 +40,30 @@ placesApp.controller "NearbyCtrl", ($scope) ->
         console.log status
 
   displayResults = ->
-    params = "?placetype=#{$scope.type}&lat=#{$scope.lat}&lng=#{$scope.lng}&rad=#{$scope.rad}"
-    webView = new steroids.views.WebView("/views/places/list.html" + params)
+    params = "?type=#{$scope.type}&lat=#{$scope.lat}&lng=#{$scope.lng}&rad=10"
     steroids.layers.push
-      view: webView
+      view: new steroids.views.WebView("/views/places/list.html" + params)
       navigationBar: false
 
 
-# List: http://localhost/views/places/list.html?type=<type>&lat=<lat>&lng=<lng>
+
+# List: http://localhost/views/places/list.html?type=<type>&lat=<lat>&lng=<lng>&rad=<rad>
 placesApp.controller "ListCtrl", ($scope, PlacesRestangular) ->
   $scope.places = []
-  $scope.type = steroids.view.params.placetype
-  $scope.lat = steroids.view.params.lat
-  $scope.lng = steroids.view.params.lng
-  $scope.rad = steroids.view.params.rad  #extract these to angular service?
+  localStorage.setItem 'params', JSON.stringify(steroids.view.params)
+
+  window.addEventListener "message", (msg)->
+    if msg.data.type is "reload"
+      #filter has been changed, refresh places
+      $scope.order = msg.data.order
+      $scope.fetchPlaces()
 
   $scope.fetchPlaces = ->
     $scope.loading = true
-    places = PlacesRestangular.all($scope.type)
-    params = {lat: $scope.lat, lng: $scope.lng, rad: $scope.rad}
-    places.customGETLIST("near", params).then (data) ->
+    params = JSON.parse localStorage.getItem('params')
+    places = PlacesRestangular.all(params.type)
+    search_or_near = if steroids.view.params.text? then "search" else "near"
+    places.customGETLIST(search_or_near, params).then (data) ->
       localStorage.setItem 'places', JSON.stringify(data)
       $scope.places = data
       $scope.loading = false
@@ -68,28 +71,41 @@ placesApp.controller "ListCtrl", ($scope, PlacesRestangular) ->
 
   # Helper function for opening new webviews
   $scope.open = (id) ->
-    webView = new steroids.views.WebView("/views/places/show.html?id=" + id)
     steroids.layers.push
-      view: webView
+      view: new steroids.views.WebView("/views/places/show.html?id=" + id)
       navigationBar: false
 
   $scope.showFilter = ->
-    filterView = new steroids.views.WebView("/views/places/filter.html")
-    steroids.modal.show(filterView)
-
-  $scope.hideFilter = ->
-    steroids.modal.hide()
-    $scope.fetchPlaces()
+    steroids.layers.push
+      view: new steroids.views.WebView("/views/places/filter.html")
+      navigationBar: false
+      animation: new steroids.Animation 'slideFromBottom'
 
   $scope.map = ->
-    flip = new steroids.Animation("flipHorizontalFromRight")
-    webView = new steroids.views.WebView("/views/places/map.html")
     steroids.layers.push
-      view: webView
+      view: new steroids.views.WebView("/views/places/map.html")
       navigationBar: false
-      animation: flip
+      animation: new steroids.Animation("flipHorizontalFromRight")
 
   $scope.back = ->
+    steroids.layers.pop()
+
+
+
+# Filter: http://localhost/views/places/list.html?type=<type>&lat=<lat>&lng=<lng>&rad=<rad>
+placesApp.controller "FilterCtrl", ($scope) ->
+  params = JSON.parse localStorage.getItem('params')
+  $scope.type = params.type
+  $scope.rad = params.rad
+  $scope.order = params.order || ''
+
+  $scope.hideFilter = ->
+    params.type = $scope.type
+    params.rad = $scope.rad
+    params.order = $scope.order
+    localStorage.setItem 'params', JSON.stringify(params)
+    msg = type: 'reload', order: $scope.order
+    window.postMessage(msg, "*")
     steroids.layers.pop()
 
 
@@ -101,16 +117,12 @@ placesApp.controller "MapCtrl", ($scope) ->
 
   # Helper function for opening new webviews
   $scope.open = (id) ->
-    webView = new steroids.views.WebView("/views/places/show.html?id=" + id)
     steroids.layers.push
-      view: webView
+      view: new steroids.views.WebView("/views/places/show.html?id=" + id)
       navigationBar: false
 
   $scope.filter = ->
     navigator.notification.alert 'filter me, yo.'
-
-  $scope.list = ->
-    $scope.back()
 
   $scope.back = ->
     steroids.layers.pop()
@@ -124,28 +136,18 @@ placesApp.controller "ShowCtrl", ($scope) ->
   # +'s for conversion to int, [0] takes first (only) result of comprehension
   $scope.place = (place for place in places when +place.id is +steroids.view.params.id)[0]
 
-  $scope.goBack = ->
+  $scope.back = ->
     steroids.layers.pop()
 
 
 
 # Search: http://localhost/views/places/search.html
-placesApp.controller "SearchCtrl", ($scope, PlacesRestangular) ->
-
+placesApp.controller "SearchCtrl", ($scope) ->
   $scope.search = ->
-    $scope.fetchPlaces()
-
-  $scope.fetchPlaces = ->
-    $scope.loading = true
-    places = PlacesRestangular.all('places')
-    params = {text: $scope.searchText}
-    places.customGETLIST("search", params).then (data) ->
-      localStorage.setItem 'places', JSON.stringify(data)
-      $scope.loading = false
-      displayResults()
+    displayResults()
 
   displayResults = ->
-    webView = new steroids.views.WebView("/views/places/list.html")
+    params = "?type=places&text=#{$scope.searchText}&rad=10"
     steroids.layers.push
-      view: webView
+      view: new steroids.views.WebView("/views/places/list.html" + params)
       navigationBar: false
