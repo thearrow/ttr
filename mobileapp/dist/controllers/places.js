@@ -1,7 +1,7 @@
 (function() {
   var placesApp;
 
-  placesApp = angular.module("placesApp", ["PlacesModel", "hmTouchevents"]);
+  placesApp = angular.module("placesApp", ["PlacesModel", "hmTouchevents", "google-maps"]);
 
   placesApp.controller("NearbyCtrl", function($scope) {
     var displayResults, geocodeAddress, onError, onSuccess;
@@ -121,7 +121,17 @@
   });
 
   placesApp.controller("MapCtrl", function($scope) {
+    var params;
     $scope.places = JSON.parse(localStorage.getItem('places'));
+    params = JSON.parse(localStorage.getItem('params'));
+    angular.extend($scope, {
+      center: {
+        latitude: params.lat,
+        longitude: params.lng
+      },
+      markers: $scope.places,
+      zoom: 12
+    });
     $scope.open = function(id) {
       return steroids.layers.push({
         view: new steroids.views.WebView("/views/places/show.html?id=" + id),

@@ -1,7 +1,7 @@
 # This file is written in coffeescript - a leaner javascript - indentation matters.
 # See: http://coffeescript.org/
 
-placesApp = angular.module("placesApp", ["PlacesModel", "hmTouchevents"])
+placesApp = angular.module("placesApp", ["PlacesModel", "hmTouchevents", "google-maps"])
 
 
 # Nearby: http://localhost/views/places/nearby.html
@@ -112,8 +112,16 @@ placesApp.controller "FilterCtrl", ($scope) ->
 
 # Map: http://localhost/views/places/map.html
 placesApp.controller "MapCtrl", ($scope) ->
-  # This is populated by NearbyCtrl or SearchCtrl
+  # These are populated by ListCtrl
   $scope.places = JSON.parse localStorage.getItem('places')
+  params = JSON.parse localStorage.getItem('params')
+
+  angular.extend $scope,
+    center:
+      latitude: params.lat # initial map center latitude
+      longitude: params.lng # initial map center longitude
+    markers: $scope.places # an array of markers,
+    zoom: 12 # the zoom level
 
   # Helper function for opening new webviews
   $scope.open = (id) ->

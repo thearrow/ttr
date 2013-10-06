@@ -17,6 +17,7 @@
   <script src="/vendor/angular-hammer/angular-hammer.js"></script>
 
   <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true"></script>
+  <script src="/components/angular/angular-google-maps.js"></script>
 
   <script src="/models/models.js"></script>
   <script src="/controllers/application.js"></script>
@@ -52,7 +53,8 @@
             </div>
         </div>
 
-        <h2>This is a map.</h2>
+        <google-map center="center" draggable="true" zoom="zoom" markers="markers"
+                    style="height: 360px; display: block"></google-map>
 
     </div>
 
