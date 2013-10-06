@@ -121,23 +121,29 @@
   });
 
   placesApp.controller("MapCtrl", function($scope) {
-    var params;
+    var content, marker, params, _i, _len, _ref;
     $scope.places = JSON.parse(localStorage.getItem('places'));
     params = JSON.parse(localStorage.getItem('params'));
+    _ref = $scope.places;
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      marker = _ref[_i];
+      content = "<h3 style='color: royalblue;' onclick=\"steroids.layers.push(      {view: new steroids.views.WebView('/views/places/show.html?id=" + marker.id + "'),navigationBar: false});\">      " + marker.name + "</h3>";
+      marker.infoWindow = content;
+    }
     angular.extend($scope, {
       center: {
         latitude: params.lat,
         longitude: params.lng
       },
       markers: $scope.places,
-      zoom: 12
+      zoom: 12,
+      open: function(id) {
+        return steroids.layers.push({
+          view: new steroids.views.WebView("/views/places/show.html?id=" + id),
+          navigationBar: false
+        });
+      }
     });
-    $scope.open = function(id) {
-      return steroids.layers.push({
-        view: new steroids.views.WebView("/views/places/show.html?id=" + id),
-        navigationBar: false
-      });
-    };
     $scope.filter = function() {
       return navigator.notification.alert('filter me, yo.');
     };

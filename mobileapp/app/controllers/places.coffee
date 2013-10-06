@@ -116,18 +116,18 @@ placesApp.controller "MapCtrl", ($scope) ->
   $scope.places = JSON.parse localStorage.getItem('places')
   params = JSON.parse localStorage.getItem('params')
 
+  for marker in $scope.places
+    content = "<h3 style='color: royalblue;' onclick=\"steroids.layers.push(
+      {view: new steroids.views.WebView('/views/places/show.html?id=#{marker.id}'),navigationBar: false});\">
+      #{marker.name}</h3>"
+    marker.infoWindow = content
+
   angular.extend $scope,
     center:
       latitude: params.lat # initial map center latitude
       longitude: params.lng # initial map center longitude
     markers: $scope.places # an array of markers,
     zoom: 12 # the zoom level
-
-  # Helper function for opening new webviews
-  $scope.open = (id) ->
-    steroids.layers.push
-      view: new steroids.views.WebView("/views/places/show.html?id=" + id)
-      navigationBar: false
 
   $scope.filter = ->
     navigator.notification.alert 'filter me, yo.'

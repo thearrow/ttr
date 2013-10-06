@@ -9,15 +9,11 @@
                 </button>
             </div>
 
-            <div class="topcoat-navigation-bar__item left quarter">
+            <div class="topcoat-navigation-bar__item center half">
                 <h1 class="topcoat-navigation-bar__title">Map</h1>
             </div>
 
-            <div class="topcoat-navigation-bar__item right quarter">
-                <button class="topcoat-icon-button" hm-tap="filter()">
-                    <span class="topcoat-icon icon-filter"></span>
-                </button>
-            </div>
+
             <div class="topcoat-navigation-bar__item right quarter">
                 <button class="topcoat-icon-button" hm-tap="back()">
                     <span class="topcoat-icon icon-list"></span>
@@ -25,7 +21,7 @@
             </div>
         </div>
 
-        <google-map center="center" draggable="true" zoom="zoom" markers="markers"
+        <google-map center="center" draggable="true" zoom="zoom" markers="markers" fit="true"
                     style="height: 360px; display: block"></google-map>
 
     </div>
