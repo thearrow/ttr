@@ -136,13 +136,7 @@
         longitude: params.lng
       },
       markers: $scope.places,
-      zoom: 12,
-      open: function(id) {
-        return steroids.layers.push({
-          view: new steroids.views.WebView("/views/places/show.html?id=" + id),
-          navigationBar: false
-        });
-      }
+      zoom: 12
     });
     $scope.filter = function() {
       return navigator.notification.alert('filter me, yo.');
