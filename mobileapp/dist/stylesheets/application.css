@@ -10,3 +10,9 @@ input {
 .content-padded {
   padding: 10px;
 }
+
+#top-list-nav {
+	height: auto;
+	width: 100%;
+  background-color: red;
+}
