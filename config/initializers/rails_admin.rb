@@ -25,8 +25,12 @@ RailsAdmin.config do |config|
   # config.label_methods << :description # Default is [:name, :title]
 
   config.navigation_static_links = {
-      'Push Notifications' => '/push_notifications'
+      'Push Notifications' => '/push'
   }
+
+  config.model 'DeviceToken' do
+    visible false
+  end
 
   config.model 'Admin' do
     navigation_icon 'icon-user'

@@ -14,5 +14,13 @@ input {
 #top-list-nav {
 	height: auto;
 	width: 100%;
-  background-color: red;
+  background-color: #A8253B;
+}
+
+.topcoat-navigation-bar__title {
+	color: white;
+}
+
+.list-item {
+	background-color: #828282;
 }
