@@ -4,6 +4,7 @@ Ttr::Application.routes.draw do
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   get '/push', to: 'push#index'
   post '/push/register', to:  'push#register'
+  post '/push/send', to: 'push#send_notifications'
 
   resources :restaurants, controller: "place", type: "Restaurant" do
     get 'near', on: :collection

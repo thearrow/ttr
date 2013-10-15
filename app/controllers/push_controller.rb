@@ -7,7 +7,9 @@ class PushController < ApplicationController
   end
 
   def send_notifications
-
+    send_ios_notifications()
+    send_android_notifications()
+    render text: "Push Notifications Successfully Sent To #{DeviceToken.count} Devices! \nMessage: #{params[:alert]}"
   end
 
   # Hit from the mobile app
@@ -32,5 +34,20 @@ class PushController < ApplicationController
 
   def token_params
     params.permit(:token)
+  end
+
+  def send_ios_notifications
+    notifications = []
+    DeviceTokenIos.all.each do |token|
+      notifications << APNS::Notification.new(token.token, alert: params[:alert])
+    end
+    APNS.send_notifications(notifications)
+  end
+
+  def send_android_notifications
+    devices = DeviceTokenAndroid.all.collect { |token| token.token }
+    data = {alert: params[:alert]}
+    notifications = GCM::Notification.new(devices, data)
+    GCM.send_notifications(notifications)
   end
 end

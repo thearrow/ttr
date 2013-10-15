@@ -58,9 +58,14 @@ Connecting to Steroids
 
 In /mobileapp/app/models/restaurant.js the uri of the api needs to be updated to either your local machine's ip or the heroku address (later).
 
-
-
 Any changes you make to the local project files using your favorite editor are instantly shared with the vm.
 
 When you're finished, `exit` then `vagrant halt` shuts down the vm but keeps it on your hard drive. (quick `vagrant up` next time).
 `exit` then `vagrant destroy` shuts down the vm and deletes it from your hard drive.
+
+
+
+Rails Server Configuration
+-----
+- `ttr/cert.pem` needs to be a valid Apple Push Services Certificate
+- `GCM_KEY` Environment variable needs to be a valid Google Cloud Messaging API Key

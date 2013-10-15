@@ -1,2 +1,10 @@
 %h1 Send A Push Notification
 %p Message will be sent to #{@count} registered devices
+
+%form{action: '/push/send', method: 'post'}
+  %label{for: 'alert'} Message:
+  <br/>
+  %textarea{id: 'alert', name: 'alert'}
+  <br/>
+  = token_tag nil
+  %input{type: 'submit', value: 'Send Push'}
