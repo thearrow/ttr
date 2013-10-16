@@ -18,6 +18,7 @@
 
   <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true"></script>
   <script src="/components/angular/angular-google-maps.js"></script>
+  <script src="/javascripts/PushNotification.js"></script>
 
   <script src="/models/models.js"></script>
   <script src="/controllers/application.js"></script>
@@ -25,79 +26,76 @@
 </head>
 <body>
 
-
-  <div ng-app="placesApp">
-
-    <div ng-controller="FilterCtrl">
-        <div class="topcoat-navigation-bar">
-            <div class="topcoat-navigation-bar__item left quarter">
-            </div>
-
-            <div class="topcoat-navigation-bar__item center half">
-                <h1 class="topcoat-navigation-bar__title">Filter</h1>
-            </div>
-
-            <div class="topcoat-navigation-bar__item right quarter">
-                <button class="topcoat-icon-button" hm-tap="hideFilter()">
-                    <span class="topcoat-icon icon-close"></span>
-                </button>
-            </div>
+  <div ng-controller="FilterCtrl">
+    <div class="topcoat-navigation-bar">
+        <div class="topcoat-navigation-bar__item left quarter">
         </div>
 
-        <div class="nearby-container">
-            <p>Type:</p>
-            <div class="topcoat-button-bar">
-                <label class="topcoat-button-bar__item">
-                    <input type="radio" ng-model="type" value="places">
-                    <button class="topcoat-button-bar__button">All</button>
-                </label>
-                <label class="topcoat-button-bar__item">
-                    <input type="radio" ng-model="type" value="restaurants">
-                    <button class="topcoat-button-bar__button">Restaurants</button>
-                </label>
-                <label class="topcoat-button-bar__item">
-                    <input type="radio" ng-model="type" value="bars">
-                    <button class="topcoat-button-bar__button">Bars</button>
-                </label>
-            </div>
+        <div class="topcoat-navigation-bar__item center half">
+            <h1 class="topcoat-navigation-bar__title">Filter</h1>
+        </div>
 
-            <p>Max Distance:</p>
-            <div class="topcoat-button-bar">
-                <label class="topcoat-button-bar__item">
-                    <input type="radio" ng-model="rad" value="5">
-                    <button class="topcoat-button-bar__button">5 mi</button>
-                </label>
-                <label class="topcoat-button-bar__item">
-                    <input type="radio" ng-model="rad" value="10">
-                    <button class="topcoat-button-bar__button">10 mi</button>
-                </label>
-                <label class="topcoat-button-bar__item">
-                    <input type="radio" ng-model="rad" value="20">
-                    <button class="topcoat-button-bar__button">20 mi</button>
-                </label>
-            </div>
+        <div class="topcoat-navigation-bar__item right quarter">
+            <button class="topcoat-icon-button" hm-tap="hideFilter()">
+                <span class="topcoat-icon icon-close"></span>
+            </button>
+        </div>
+    </div>
 
-            <p>Sort By:</p>
-            <div class="topcoat-button-bar">
-                <label class="topcoat-button-bar__item">
-                    <input type="radio" ng-model="order" value="">
-                    <button class="topcoat-button-bar__button">Distance</button>
-                </label>
-                <label class="topcoat-button-bar__item">
-                    <input type="radio" ng-model="order" value="name">
-                    <button class="topcoat-button-bar__button">Name</button>
-                </label>
-                <label class="topcoat-button-bar__item">
-                    <input type="radio" ng-model="order" value="updated_at">
-                    <button class="topcoat-button-bar__button">Derp</button>
-                </label>
-            </div>
+    <div class="nearby-container">
+        <p>Type:</p>
+        <div class="topcoat-button-bar">
+            <label class="topcoat-button-bar__item">
+                <input type="radio" ng-model="type" value="places">
+                <button class="topcoat-button-bar__button">All</button>
+            </label>
+            <label class="topcoat-button-bar__item">
+                <input type="radio" ng-model="type" value="restaurants">
+                <button class="topcoat-button-bar__button">Restaurants</button>
+            </label>
+            <label class="topcoat-button-bar__item">
+                <input type="radio" ng-model="type" value="bars">
+                <button class="topcoat-button-bar__button">Bars</button>
+            </label>
+        </div>
 
+        <p>Max Distance:</p>
+        <div class="topcoat-button-bar">
+            <label class="topcoat-button-bar__item">
+                <input type="radio" ng-model="rad" value="5">
+                <button class="topcoat-button-bar__button">5 mi</button>
+            </label>
+            <label class="topcoat-button-bar__item">
+                <input type="radio" ng-model="rad" value="10">
+                <button class="topcoat-button-bar__button">10 mi</button>
+            </label>
+            <label class="topcoat-button-bar__item">
+                <input type="radio" ng-model="rad" value="20">
+                <button class="topcoat-button-bar__button">20 mi</button>
+            </label>
+        </div>
+
+        <p>Sort By:</p>
+        <div class="topcoat-button-bar">
+            <label class="topcoat-button-bar__item">
+                <input type="radio" ng-model="order" value="">
+                <button class="topcoat-button-bar__button">Distance</button>
+            </label>
+            <label class="topcoat-button-bar__item">
+                <input type="radio" ng-model="order" value="name">
+                <button class="topcoat-button-bar__button">Name</button>
+            </label>
+            <label class="topcoat-button-bar__item">
+                <input type="radio" ng-model="order" value="updated_at">
+                <button class="topcoat-button-bar__button">Derp</button>
+            </label>
         </div>
 
     </div>
 
 </div>
+
+
 
 </body>
 </html>

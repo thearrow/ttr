@@ -3,9 +3,41 @@
 
 placesApp = angular.module("placesApp", ["PlacesModel", "hmTouchevents", "google-maps"])
 
+document.addEventListener "deviceready", ->
+  angular.bootstrap document, ['placesApp']
 
 # Nearby: http://localhost/views/places/nearby.html
-placesApp.controller "NearbyCtrl", ($scope) ->
+placesApp.controller "NearbyCtrl", ($scope, $http) ->
+  document.addEventListener "deviceready", ->
+    try
+      if device.platform is "android" or device.platform is "Android"
+        navigator.notification.alert "registering android device..."
+        # TODO - replace senderID with our sender ID
+        window.plugins.pushNotification.register successHandler, errorHandler,
+          senderID: "661780372179"
+          ecb: "onNotificationGCM"
+      else
+        navigator.notification.alert "registering iOS device..."
+        window.plugins.pushNotification.register tokenHandler, errorHandler,
+          badge: "true"
+          sound: "true"
+          alert: "true"
+          ecb: "onNotificationAPN"
+    catch err
+      txt = "There was an error on this page.\n\n"
+      txt += "Error description: " + err.message + "\n\n"
+      navigator.notification.alert txt
+
+  tokenHandler = (result) ->
+    navigator.notification.alert "Token: " + result
+    $http.post "http://ttrestaurants.herokuapp.com/push/register",
+      token: result
+      type: "ios"
+  successHandler = (result) ->
+    navigator.notification.alert "Success: " + result
+  errorHandler = (error) ->
+    navigator.notification.alert "Error: " + error
+
   $scope.type = 'places'
   $scope.lat = 0.0
   $scope.lng = 0.0
@@ -117,7 +149,7 @@ placesApp.controller "MapCtrl", ($scope) ->
   params = JSON.parse localStorage.getItem('params')
 
   for marker in $scope.places
-    content = "<h3 style='color: royalblue;' onclick=\"steroids.layers.push(
+    content = "<h3 style='color: #A8253B;' onclick=\"steroids.layers.push(
       {view: new steroids.views.WebView('/views/places/show.html?id=#{marker.id}'),navigationBar: false});\">
       #{marker.name}</h3>"
     marker.infoWindow = content

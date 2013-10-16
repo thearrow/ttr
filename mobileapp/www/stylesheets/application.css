@@ -11,10 +11,8 @@ input {
   padding: 10px;
 }
 
-#top-list-nav {
-	height: auto;
-	width: 100%;
-  background-color: #A8253B;
+.topcoat-navigation-bar {
+    background: #A8253B;
 }
 
 .topcoat-navigation-bar__title {
@@ -22,5 +20,6 @@ input {
 }
 
 .list-item {
-	background-color: #828282;
+    color: #222222;
+	background-color: #CECECE;
 }

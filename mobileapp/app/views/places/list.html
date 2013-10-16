@@ -1,41 +1,37 @@
-<div ng-app="placesApp">
+<div ng-controller="ListCtrl">
 
-    <div ng-controller="ListCtrl">
-
-        <div class="topcoat-navigation-bar" id="top-list-nav">
-            <div class="topcoat-navigation-bar__item left quarter">
-                <button class="topcoat-icon-button" hm-tap="back()">
-                    <span class="topcoat-icon icon-back"></span>
-                </button>
-            </div>
-
-            <div class="topcoat-navigation-bar__item left quarter">
-                <h1 class="topcoat-navigation-bar__title">Listings</h1>
-            </div>
-
-            <div class="topcoat-navigation-bar__item right quarter">
-                <button class="topcoat-icon-button" hm-tap="showFilter()">
-                    <span class="topcoat-icon icon-filter"></span>
-                </button>
-            </div>
-            <div class="topcoat-navigation-bar__item right quarter">
-                <button class="topcoat-icon-button" hm-tap="map()">
-                    <span class="topcoat-icon icon-map"></span>
-                </button>
-            </div>
+    <div class="topcoat-navigation-bar">
+        <div class="topcoat-navigation-bar__item left quarter">
+            <button class="topcoat-icon-button" hm-tap="back()">
+                <span class="topcoat-icon icon-back"></span>
+            </button>
         </div>
 
-        <div class="spinner" ng-show="loading"></div>
-
-        <div class="topcoat-list">
-            <ul class="topcoat-list__container">
-                <li class="topcoat-list__item list-item" hm-tap="open(place.id)"
-                    ng-repeat="place in places | orderBy:order">
-                    {{ place.name }}
-                </li>
-            </ul>
+        <div class="topcoat-navigation-bar__item left quarter">
+            <h1 class="topcoat-navigation-bar__title">Listings</h1>
         </div>
 
+        <div class="topcoat-navigation-bar__item right quarter">
+            <button class="topcoat-icon-button" hm-tap="showFilter()">
+                <span class="topcoat-icon icon-filter"></span>
+            </button>
+        </div>
+        <div class="topcoat-navigation-bar__item right quarter">
+            <button class="topcoat-icon-button" hm-tap="map()">
+                <span class="topcoat-icon icon-map"></span>
+            </button>
+        </div>
+    </div>
+
+    <div class="spinner" ng-show="loading"></div>
+
+    <div class="topcoat-list">
+        <ul class="topcoat-list__container">
+            <li class="topcoat-list__item list-item" hm-tap="open(place.id)"
+                ng-repeat="place in places | orderBy:order">
+                {{ place.name }}
+            </li>
+        </ul>
     </div>
 
 </div>

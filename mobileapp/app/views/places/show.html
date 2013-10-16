@@ -1,25 +1,21 @@
-<div ng-app="placesApp">
+<div ng-controller="ShowCtrl">
 
-    <div ng-controller="ShowCtrl">
-
-        <div class="topcoat-navigation-bar">
-            <div class="topcoat-navigation-bar__item left quarter">
-                <button class="topcoat-icon-button" hm-tap="back()">
-                    <span class="topcoat-icon icon-back"></span>
-                </button>
-            </div>
-            <div class="topcoat-navigation-bar__item center half">
-                {{place.name}}
-            </div>
+    <div class="topcoat-navigation-bar">
+        <div class="topcoat-navigation-bar__item left quarter">
+            <button class="topcoat-icon-button" hm-tap="back()">
+                <span class="topcoat-icon icon-back"></span>
+            </button>
         </div>
-
-        <div class="content-padded">
-            <p>{{place.description}}</p>
-            <p>{{place.street}} <br/> {{place.city}}, {{place.state}} {{place.zip}}</p>
-            <p>{{place.phone}}</p>
-            <p><a href="{{place.url}}">{{place.url}}</a></p>
+        <div class="topcoat-navigation-bar__item center half">
+            <h1 class="topcoat-navigation-bar__title">{{place.name}}</h1>
         </div>
+    </div>
 
+    <div class="content-padded">
+        <p>{{place.description}}</p>
+        <p>{{place.street}} <br/> {{place.city}}, {{place.state}} {{place.zip}}</p>
+        <p>{{place.phone}}</p>
+        <p><a href="{{place.url}}">{{place.url}}</a></p>
     </div>
 
 </div>

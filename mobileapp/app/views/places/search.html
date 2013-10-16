@@ -1,24 +1,19 @@
-<div ng-app="placesApp">
+<div ng-controller="SearchCtrl">
 
-    <div ng-controller="SearchCtrl">
-
-        <div class="topcoat-navigation-bar">
-            <div class="topcoat-navigation-bar__item center full">
-                <h1 class="topcoat-navigation-bar__title">Search</h1>
-            </div>
+    <div class="topcoat-navigation-bar">
+        <div class="topcoat-navigation-bar__item center full">
+            <h1 class="topcoat-navigation-bar__title">Search</h1>
         </div>
+    </div>
 
-        <div class="spinner" ng-show="loading"></div>
+    <div class="spinner" ng-show="loading"></div>
 
-        <div>
-            <form ng-submit="search()">
-                <input type="search" ng-model="searchText"
-                       class="topcoat-search-input" placeholder="Name/Description...">
-            </form>
-        </div>
-
-
-
+    <div>
+        <form ng-submit="search()">
+            <input type="search" ng-model="searchText"
+                   class="topcoat-search-input" placeholder="Name/Description...">
+        </form>
     </div>
 
 </div>
+

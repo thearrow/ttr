@@ -3,8 +3,50 @@
 
   placesApp = angular.module("placesApp", ["PlacesModel", "hmTouchevents", "google-maps"]);
 
-  placesApp.controller("NearbyCtrl", function($scope) {
-    var displayResults, geocodeAddress, onError, onSuccess;
+  document.addEventListener("deviceready", function() {
+    return angular.bootstrap(document, ['placesApp']);
+  });
+
+  placesApp.controller("NearbyCtrl", function($scope, $http) {
+    var displayResults, errorHandler, geocodeAddress, onError, onSuccess, successHandler, tokenHandler;
+    document.addEventListener("deviceready", function() {
+      var err, txt;
+      try {
+        if (device.platform === "android" || device.platform === "Android") {
+          navigator.notification.alert("registering android device...");
+          return window.plugins.pushNotification.register(successHandler, errorHandler, {
+            senderID: "661780372179",
+            ecb: "onNotificationGCM"
+          });
+        } else {
+          navigator.notification.alert("registering iOS device...");
+          return window.plugins.pushNotification.register(tokenHandler, errorHandler, {
+            badge: "true",
+            sound: "true",
+            alert: "true",
+            ecb: "onNotificationAPN"
+          });
+        }
+      } catch (_error) {
+        err = _error;
+        txt = "There was an error on this page.\n\n";
+        txt += "Error description: " + err.message + "\n\n";
+        return navigator.notification.alert(txt);
+      }
+    });
+    tokenHandler = function(result) {
+      navigator.notification.alert("Token: " + result);
+      return $http.post("http://ttrestaurants.herokuapp.com/push/register", {
+        token: result,
+        type: "ios"
+      });
+    };
+    successHandler = function(result) {
+      return navigator.notification.alert("Success: " + result);
+    };
+    errorHandler = function(error) {
+      return navigator.notification.alert("Error: " + error);
+    };
     $scope.type = 'places';
     $scope.lat = 0.0;
     $scope.lng = 0.0;
@@ -127,7 +169,7 @@
     _ref = $scope.places;
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
       marker = _ref[_i];
-      content = "<h3 style='color: royalblue;' onclick=\"steroids.layers.push(      {view: new steroids.views.WebView('/views/places/show.html?id=" + marker.id + "'),navigationBar: false});\">      " + marker.name + "</h3>";
+      content = "<h3 style='color: #A8253B;' onclick=\"steroids.layers.push(      {view: new steroids.views.WebView('/views/places/show.html?id=" + marker.id + "'),navigationBar: false});\">      " + marker.name + "</h3>";
       marker.infoWindow = content;
     }
     angular.extend($scope, {

@@ -1,50 +1,46 @@
-<div ng-app="placesApp">
+<div ng-controller="NearbyCtrl">
 
-    <div ng-controller="NearbyCtrl">
-
-        <div class="topcoat-navigation-bar">
-            <div class="topcoat-navigation-bar__item left quarter">
-            </div>
-
-            <div class="topcoat-navigation-bar__item center half">
-                <h1 class="topcoat-navigation-bar__title">Nearby</h1>
-            </div>
-
-            <div class="topcoat-navigation-bar__item right quarter">
-            </div>
+    <div class="topcoat-navigation-bar">
+        <div class="topcoat-navigation-bar__item left quarter">
         </div>
 
-        <div class="spinner" ng-show="loading"></div>
-
-        <div class="nearby-container">
-            <p>I want to find:</p>
-            <div class="topcoat-button-bar">
-                <label class="topcoat-button-bar__item">
-                    <input type="radio" ng-model="type" value="places">
-                    <button class="topcoat-button-bar__button">All</button>
-                </label>
-                <label class="topcoat-button-bar__item">
-                    <input type="radio" ng-model="type" value="restaurants">
-                    <button class="topcoat-button-bar__button">Restaurants</button>
-                </label>
-                <label class="topcoat-button-bar__item">
-                    <input type="radio" ng-model="type" value="bars">
-                    <button class="topcoat-button-bar__button">Bars</button>
-                </label>
-            </div>
-
-            <p>Near:</p>
-            <button class="topcoat-button" hm-tap="nearbyCurrent()">My Current Location</button>
-            <p>-OR-</p>
-            <div>
-                <form ng-submit="nearbyText()">
-                    <input type="text" class="topcoat-text-input" ng-model="locationText"
-                           placeholder="Address / City / Zip ...">
-                    <button class="topcoat-button">Go</button>
-                </form>
-            </div>
+        <div class="topcoat-navigation-bar__item center half">
+            <h1 class="topcoat-navigation-bar__title">Nearby</h1>
         </div>
 
+        <div class="topcoat-navigation-bar__item right quarter">
+        </div>
+    </div>
+
+    <div class="spinner" ng-show="loading"></div>
+
+    <div class="nearby-container">
+        <p>I want to find:</p>
+        <div class="topcoat-button-bar">
+            <label class="topcoat-button-bar__item">
+                <input type="radio" ng-model="type" value="places">
+                <button class="topcoat-button-bar__button">All</button>
+            </label>
+            <label class="topcoat-button-bar__item">
+                <input type="radio" ng-model="type" value="restaurants">
+                <button class="topcoat-button-bar__button">Restaurants</button>
+            </label>
+            <label class="topcoat-button-bar__item">
+                <input type="radio" ng-model="type" value="bars">
+                <button class="topcoat-button-bar__button">Bars</button>
+            </label>
+        </div>
+
+        <p>Near:</p>
+        <button class="topcoat-button" hm-tap="nearbyCurrent()">My Current Location</button>
+        <p>-OR-</p>
+        <div>
+            <form ng-submit="nearbyText()">
+                <input type="text" class="topcoat-text-input" ng-model="locationText"
+                       placeholder="Address / City / Zip ...">
+                <button class="topcoat-button">Go</button>
+            </form>
+        </div>
     </div>
 
 </div>
