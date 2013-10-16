@@ -52,6 +52,8 @@
         <plugin name="Globalization" value="CDVGlobalization" />
         <plugin name="InAppBrowser" value="CDVInAppBrowser" />
 
+        <gap:plugin name="com.phonegap.plugins.PushPlugin"/>
+
         <!-- Built-in AppGyver Scanner plugins -->
         <plugin name="SQLitePlugin" value="SQLitePlugin" />
         <plugin name="org.apache.cordova.barcodeScanner" value="CDVBarcodeScanner" />
