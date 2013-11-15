@@ -26,27 +26,22 @@
 .icon-back {
     background: url("../../vendor/topcoat/svg/back_light.png") no-repeat center;
     background-size: 20px;
-    opacity: 0.5;
 }
 .icon-filter {
     background: url("../../vendor/topcoat/svg/settings.png") no-repeat center;
     background-size: 20px;
-    opacity: 0.5;
 }
 .icon-map {
     background: url("../../vendor/topcoat/svg/location.png") no-repeat center;
     background-size: 20px;
-    opacity: 0.5;
 }
 .icon-list {
     background: url("../../vendor/topcoat/svg/listview.png") no-repeat center;
     background-size: 20px;
-    opacity: 0.5;
 }
 .icon-close {
     background: url("../../vendor/topcoat/svg/cancel.png") no-repeat center;
     background-size: 20px;
-    opacity: 0.5;
 }
 
 

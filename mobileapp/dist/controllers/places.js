@@ -13,13 +13,11 @@
       var err, txt;
       try {
         if (device.platform === "android" || device.platform === "Android") {
-          navigator.notification.alert("registering android device...");
           return window.plugins.pushNotification.register(successHandler, errorHandler, {
             senderID: "661780372179",
             ecb: "onNotificationGCM"
           });
         } else {
-          navigator.notification.alert("registering iOS device...");
           return window.plugins.pushNotification.register(tokenHandler, errorHandler, {
             badge: "true",
             sound: "true",

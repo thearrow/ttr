@@ -31,7 +31,6 @@ steroids.config.name = "Tasting Table Restaurants"
 # A boolean to enable the native tab bar.
 # Enabling tabs will override steroids.config.location (which is inteded for single WebView apps, i.e. PhoneGap's default behavior) and show the first tab of the tab array on startup.
 # Default: false
-#
 steroids.config.tabBar.enabled = true
 
 # -- Defining tabs via the tab array --
@@ -74,34 +73,30 @@ steroids.config.tabBar.tabs = [
 # Setting these values will override the values set by the application theme defined by steroids.config.theme
 # Default for all attributes: ""
 
-steroids.config.tabBar.tintColor = "#e5e9e8"
-steroids.config.tabBar.tabTitleColor = "#454545"
-steroids.config.tabBar.tabTitleShadowColor = "#000000"
-steroids.config.tabBar.selectedTabTintColor = "#454545"
+steroids.config.tabBar.tintColor = "#dddddd"
+steroids.config.tabBar.tabTitleColor = "#111111"
+steroids.config.tabBar.selectedTabTintColor = "#a8253b"
 
-# steroids.config.navigationBar.tintColor = "#00aeef"
-# steroids.config.navigationBar.titleColor = "#ffffff"
-# steroids.config.navigationBar.titleShadowColor = "#000000"
+#steroids.config.navigationBar.tintColor = "#a8253b"
+#steroids.config.navigationBar.titleColor = "#ffffff"
+#steroids.config.navigationBar.titleShadowColor = "#000000"
 
-# steroids.config.navigationBar.buttonTintColor = "#363636"
-# steroids.config.navigationBar.buttonTitleColor = "#ffffff"
-# steroids.config.navigationBar.buttonShadowColor = "#000000"
+#steroids.config.navigationBar.buttonTintColor = "#a8253b"
+#steroids.config.navigationBar.buttonTitleColor = "#ffffff"
+#steroids.config.navigationBar.buttonShadowColor = "#000000"
 
 #
 # Loading screen color is used by Android only, on the background of loading.png
-
-steroids.config.loadingScreen.tintColor = "#262626"
+steroids.config.loadingScreen.tintColor = "#dddddd"
 
 # -- iOS theme --
 # Sets a built-in theme for the navigation bar and tab bar. Valid values are "black" and "default".
 # Default: "default"
-#
-# steroids.config.theme = "default"
+#steroids.config.theme = "black"
 
 # -- Status bar --
 # Sets the visibilty of the status bar on iOS (shows the carrier, clock and battery status)
 # Default: false
-
 steroids.config.statusBar.enabled = true
 
 # -- Editor --

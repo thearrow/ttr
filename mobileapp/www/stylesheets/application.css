@@ -16,10 +16,27 @@ input {
 }
 
 .topcoat-navigation-bar__title {
-	color: white;
+	color: #dddddd;
+}
+
+.topcoat-icon-button:active,
+.topcoat-icon-button--large:active,
+.topcoat-icon-button:focus,
+.topcoat-icon-button--quiet:focus,
+.topcoat-icon-button--quiet:hover:focus,
+.topcoat-icon-button--large:focus,
+.topcoat-icon-button--large--quiet:focus,
+.topcoat-icon-button--large--quiet:hover:focus,
+.topcoat-icon-button:hover,
+.topcoat-icon-button--quiet:hover,
+.topcoat-icon-button--large:hover,
+.topcoat-icon-button--large--quiet:hover{
+    border: none;
+    background-color: transparent;
+    box-shadow: none;
 }
 
 .list-item {
-    color: #222222;
-	background-color: #CECECE;
+    color: #111111;
+	background-color: #dddddd;
 }

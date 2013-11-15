@@ -11,13 +11,13 @@ placesApp.controller "NearbyCtrl", ($scope, $http) ->
   document.addEventListener "deviceready", ->
     try
       if device.platform is "android" or device.platform is "Android"
-        navigator.notification.alert "registering android device..."
-        # TODO - replace senderID with our sender ID
+        #navigator.notification.alert "registering android device..."
+        #TODO - replace senderID with our sender ID
         window.plugins.pushNotification.register successHandler, errorHandler,
           senderID: "661780372179"
           ecb: "onNotificationGCM"
       else
-        navigator.notification.alert "registering iOS device..."
+        #navigator.notification.alert "registering iOS device..."
         window.plugins.pushNotification.register tokenHandler, errorHandler,
           badge: "true"
           sound: "true"
