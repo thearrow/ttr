@@ -65,3 +65,7 @@ When you're finished, `exit` then `vagrant halt` shuts down the vm but keeps it 
 #### Server (Rails) Configuration
 - `/cert.pem` needs to be a valid Apple Push Services Certificate
 - `GCM_KEY` Environment variable needs to be a valid Google Cloud Messaging API Key
+
+#### Client (Steroids.js) Configuration
+- Log in to [AppGyver Cloud Services](https://cloud.appgyver.com)
+- Follow their guides for configuring iOS and Android build settings
