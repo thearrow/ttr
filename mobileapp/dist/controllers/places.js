@@ -7,44 +7,31 @@
     return angular.bootstrap(document, ['placesApp']);
   });
 
-  placesApp.controller("NearbyCtrl", function($scope, $http) {
-    var displayResults, errorHandler, geocodeAddress, onError, onSuccess, successHandler, tokenHandler;
-    document.addEventListener("deviceready", function() {
-      var err, txt;
-      try {
-        if (device.platform === "android" || device.platform === "Android") {
-          return window.plugins.pushNotification.register(successHandler, errorHandler, {
-            senderID: "661780372179",
-            ecb: "onNotificationGCM"
-          });
-        } else {
-          return window.plugins.pushNotification.register(tokenHandler, errorHandler, {
-            badge: "true",
-            sound: "true",
-            alert: "true",
-            ecb: "onNotificationAPN"
-          });
+  placesApp.controller("NearbyCtrl", function($scope) {
+    var displayResults, geocodeAddress, onError, onSuccess;
+    document.addEventListener("deviceready", (function() {
+      var push;
+      push = window.pushNotification;
+      push.enablePush();
+      push.getPushID();
+      push.getIncoming(function(incoming) {
+        if (incoming.message) {
+          return alert(incoming.message);
         }
-      } catch (_error) {
-        err = _error;
-        txt = "There was an error on this page.\n\n";
-        txt += "Error description: " + err.message + "\n\n";
-        return navigator.notification.alert(txt);
-      }
-    });
-    tokenHandler = function(result) {
-      navigator.notification.alert("Token: " + result);
-      return $http.post("http://ttrestaurants.herokuapp.com/push/register", {
-        token: result,
-        type: "ios"
       });
-    };
-    successHandler = function(result) {
-      return navigator.notification.alert("Success: " + result);
-    };
-    errorHandler = function(error) {
-      return navigator.notification.alert("Error: " + error);
-    };
+      push.registerEvent("push", function(data) {
+        return navigator.notification.alert(data.message);
+      });
+      push.registerEvent("registration", function(error, id) {
+        if (error) {
+          return navigator.notification.alert(error);
+        }
+      });
+      document.addEventListener("resume", (function() {
+        return window.pushNotification.resetBadge();
+      }), false);
+      return push.registerForNotificationTypes(push.notificationType.badge | push.notificationType.sound | push.notificationType.alert);
+    }), false);
     $scope.type = 'places';
     $scope.lat = 0.0;
     $scope.lng = 0.0;

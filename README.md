@@ -1,11 +1,19 @@
 # Tasting Table Restaurants
-- Server/Database: Ruby on Rails + MySQL
-  - [Visit http://ttrestaurants.herokuapp.com/](http://ttrestaurants.herokuapp.com/)
+
+---
+
+## Links
+
+#### Server (Ruby on Rails + MySQL on Heroku)
+- [Admin Login](http://ttrestaurants.herokuapp.com)
   - Login with `username: admin@example.com  password: password`
+- [Heroku Login](https://id.heroku.com/login)
+- [UrbanAirship Login](https://go.urbanairship.com/accounts/login/)
+  - Limitations: 1,000,000 pushes / month for free
 
-
-- Client: Steroids.js/Phonegap Hybrid Mobile App
-  - [Visit http://share.appgyver.com for an online app simulator](https://share.appgyver.com/?id=5345&hash=d349bc95f71feb3c50618dc0e3bfa2e681fc294ecd3638e7091f0daea79d67d4&device_type=iphone)
+#### Client (Steroids.js Hybrid Mobile App)
+- [Online Simulator](https://share.appgyver.com/?id=5345&hash=d349bc95f71feb3c50618dc0e3bfa2e681fc294ecd3638e7091f0daea79d67d4&device_type=iphone)
+- [AppGyver Cloud Services Login](https://cloud.appgyver.com/applications/5345)
 
 ---
 
@@ -63,8 +71,7 @@ When you're finished, `exit` then `vagrant halt` shuts down the vm but keeps it 
 ## Deployment
 
 #### Server (Rails) Configuration
-- `/cert.pem` needs to be a valid Apple Push Services Certificate
-- `GCM_KEY` Environment variable needs to be a valid Google Cloud Messaging API Key
+- Deploy like any other Rails app with a MySQL Database. Memcached is optional.
 
 #### Client (Steroids.js) Configuration
 - Log in to [AppGyver Cloud Services](https://cloud.appgyver.com)

@@ -3,40 +3,33 @@
 
 placesApp = angular.module("placesApp", ["PlacesModel", "hmTouchevents", "google-maps"])
 
+#bootstrap angular app
 document.addEventListener "deviceready", ->
   angular.bootstrap document, ['placesApp']
 
 # Nearby: http://localhost/views/places/nearby.html
-placesApp.controller "NearbyCtrl", ($scope, $http) ->
-  document.addEventListener "deviceready", ->
-    try
-      if device.platform is "android" or device.platform is "Android"
-        #navigator.notification.alert "registering android device..."
-        #TODO - replace senderID with our sender ID
-        window.plugins.pushNotification.register successHandler, errorHandler,
-          senderID: "661780372179"
-          ecb: "onNotificationGCM"
-      else
-        #navigator.notification.alert "registering iOS device..."
-        window.plugins.pushNotification.register tokenHandler, errorHandler,
-          badge: "true"
-          sound: "true"
-          alert: "true"
-          ecb: "onNotificationAPN"
-    catch err
-      txt = "There was an error on this page.\n\n"
-      txt += "Error description: " + err.message + "\n\n"
-      navigator.notification.alert txt
-
-  tokenHandler = (result) ->
-    navigator.notification.alert "Token: " + result
-    $http.post "http://ttrestaurants.herokuapp.com/push/register",
-      token: result
-      type: "ios"
-  successHandler = (result) ->
-    navigator.notification.alert "Success: " + result
-  errorHandler = (error) ->
-    navigator.notification.alert "Error: " + error
+placesApp.controller "NearbyCtrl", ($scope) ->
+  #push notification handling
+  document.addEventListener "deviceready", (->
+    push = window.pushNotification
+    push.enablePush()
+    push.getPushID()
+    # Incoming messages (user swipes on the push notification from outside the app)
+    push.getIncoming (incoming) ->
+      if incoming.message
+        navigator.notification.alert incoming.message
+    # User has the app open when a push is sent
+    push.registerEvent "push", (data) ->
+      navigator.notification.alert data.message
+    # Registration
+    push.registerEvent "registration", (error, id) ->
+      if error
+        navigator.notification.alert error
+    document.addEventListener "resume", (->
+      window.pushNotification.resetBadge()
+    ), false
+    push.registerForNotificationTypes(push.notificationType.badge | push.notificationType.sound | push.notificationType.alert)
+  ), false
 
   $scope.type = 'places'
   $scope.lat = 0.0
