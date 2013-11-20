@@ -72,6 +72,7 @@ When you're finished, `exit` then `vagrant halt` shuts down the vm but keeps it 
 
 #### Server (Rails) Configuration
 - Deploy like any other Rails app with a MySQL Database. Memcached is optional.
+- Environment variables UA_APP_KEY, UA_APP_SECRET, UA_MASTER_SECRET must be set to corresponding UrbanAirship keys.
 
 #### Client (Steroids.js) Configuration
 - Log in to [AppGyver Cloud Services](https://cloud.appgyver.com)
