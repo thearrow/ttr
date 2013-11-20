@@ -2,7 +2,7 @@ class PushController < ApplicationController
   before_filter :check_access, only: [:index, :send_notifications]
 
   def index
-    @count = Urbanairship.device_tokens_count
+    @count = Urbanairship.device_tokens_count['active_device_tokens_count']
   end
 
   def send_notifications
@@ -12,7 +12,8 @@ class PushController < ApplicationController
     }
     Urbanairship.broadcast_push(notification)
 
-    render text: "Push Notifications Successfully Sent To #{Urbanairship.device_tokens_count} Devices! \nMessage: #{params[:alert]}"
+    render text: "Push Notifications Successfully Sent
+      To #{Urbanairship.device_tokens_count['active_device_tokens_count']} Devices! \nMessage: #{params[:alert]}"
   end
 
   private
