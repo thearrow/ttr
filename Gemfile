@@ -57,8 +57,8 @@ gem 'rack-cors', :require => 'rack/cors'
 # Simpler, Ruby-esque ActiveRecord queries
 gem 'squeel'
 
-# Support for sending push notifications to iOS and Android
-gem 'pushmeup'
+# Support for sending push notifications
+gem 'urbanairship'
 
 # Use Capistrano for deployment
 # gem 'capistrano', group: :development
