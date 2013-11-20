@@ -40,7 +40,11 @@
     </div>
 
     <div class="content-padded">
-        <p>{{place.description}}</p>
+        <p>{{place.description}}
+            <br/>({{formatted_price}})
+            <br/>{{best_tags}}
+            <br/>{{atmosphere_tags}}
+        </p>
         <p>{{place.street}} <br/> {{place.city}}, {{place.state}} {{place.zip}}</p>
         <p>{{place.phone}}</p>
         <p><a href="{{place.url}}">{{place.url}}</a></p>

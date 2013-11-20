@@ -16,7 +16,7 @@
       push.getPushID();
       push.getIncoming(function(incoming) {
         if (incoming.message) {
-          return alert(incoming.message);
+          return navigator.notification.alert(incoming.message);
         }
       });
       push.registerEvent("push", function(data) {
@@ -174,7 +174,7 @@
   });
 
   placesApp.controller("ShowCtrl", function($scope) {
-    var place, places;
+    var place, places, x;
     places = JSON.parse(localStorage.getItem('places'));
     $scope.place = ((function() {
       var _i, _len, _results;
@@ -187,6 +187,27 @@
       }
       return _results;
     })())[0];
+    $scope.formatted_price = Array(+$scope.place.price + 1).join('$');
+    $scope.best_tags = 'Best For: ' + ((function() {
+      var _i, _len, _ref, _results;
+      _ref = $scope.place.tag_best_fors;
+      _results = [];
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        x = _ref[_i];
+        _results.push(x.name);
+      }
+      return _results;
+    })()).join(', ');
+    $scope.atmosphere_tags = 'Atmosphere: ' + ((function() {
+      var _i, _len, _ref, _results;
+      _ref = $scope.place.tag_atmospheres;
+      _results = [];
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        x = _ref[_i];
+        _results.push(x.name);
+      }
+      return _results;
+    })()).join(', ');
     return $scope.back = function() {
       return steroids.layers.pop();
     };

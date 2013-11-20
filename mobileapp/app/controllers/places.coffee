@@ -168,6 +168,9 @@ placesApp.controller "ShowCtrl", ($scope) ->
 
   # +'s for conversion to int, [0] takes first (only) result of comprehension
   $scope.place = (place for place in places when +place.id is +steroids.view.params.id)[0]
+  $scope.formatted_price = Array(+$scope.place.price+1).join '$'
+  $scope.best_tags = 'Best For: ' + (x.name for x in $scope.place.tag_best_fors).join ', '
+  $scope.atmosphere_tags = 'Atmosphere: ' + (x.name for x in $scope.place.tag_atmospheres).join ', '
 
   $scope.back = ->
     steroids.layers.pop()
