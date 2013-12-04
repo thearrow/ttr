@@ -75,5 +75,7 @@ When you're finished, `exit` then `vagrant halt` shuts down the vm but keeps it 
 - Environment variables UA_APP_KEY, UA_APP_SECRET, UA_MASTER_SECRET must be set to corresponding UrbanAirship keys.
 
 #### Client (Steroids.js) Configuration
+- Make sure Line #10 of `/mobileapp/app/models/places.coffee` has the correct address of the rails server you set up above.
+- Run `steroids deploy` inside `/mobileapp`
 - Log in to [AppGyver Cloud Services](https://cloud.appgyver.com)
 - Follow their guides for configuring iOS and Android build settings
