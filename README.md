@@ -1,5 +1,10 @@
 # Tasting Table Restaurants
 
+## Contents
+- [Links (Our Temporary Development Setup)](https://github.com/thearrow/ttr#links)
+- [Deployment Instructions](https://github.com/thearrow/ttr#deployment)
+- [Local Development Setup](https://github.com/thearrow/ttr#development)
+
 ---
 
 ## Links
@@ -17,7 +22,22 @@
 
 ---
 
+## Deployment
+
+#### Server (Rails) Configuration
+- Deploy like any other Rails app with a MySQL Database. Memcached is optional.
+- Environment variables UA_APP_KEY, UA_APP_SECRET, UA_MASTER_SECRET must be set to corresponding UrbanAirship keys. You can get these keys by creating a new PRODUCTION app at urbanairship.com and configuring it with the appropriate apple push certificates. The free plan is limited to 1,000,000 pushes/month.
+
+#### Client (Steroids.js) Configuration
+- Make sure Line #10 of `/mobileapp/app/models/places.coffee` has the correct address of the rails server you set up above.
+- Run `steroids deploy` inside `/mobileapp`
+- Log in to [AppGyver Cloud Services](https://cloud.appgyver.com)
+- Follow their guides for configuring iOS and Android build settings, including specifying the UrbanAirship keys and app icons (included in `/mobileapp/icons` and `/mobileapp/splashscreens`).
+
+---
+
 ## Development
+
 #### Vagrant Setup (Optional)
 If you have trouble getting vagrant working, or you already have the dependencies installed, feel free to run the app locally!
 This is a bit of downloading & installing (~500MB between VirtualBox and the VM image).
@@ -66,16 +86,4 @@ Any changes you make to the local project files using your favorite editor are i
 When you're finished, `exit` then `vagrant halt` shuts down the vm but keeps it on your hard drive. (quick `vagrant up` next time).
 `exit` then `vagrant destroy` shuts down the vm and deletes it from your hard drive.
 
----
 
-## Deployment
-
-#### Server (Rails) Configuration
-- Deploy like any other Rails app with a MySQL Database. Memcached is optional.
-- Environment variables UA_APP_KEY, UA_APP_SECRET, UA_MASTER_SECRET must be set to corresponding UrbanAirship keys.
-
-#### Client (Steroids.js) Configuration
-- Make sure Line #10 of `/mobileapp/app/models/places.coffee` has the correct address of the rails server you set up above.
-- Run `steroids deploy` inside `/mobileapp`
-- Log in to [AppGyver Cloud Services](https://cloud.appgyver.com)
-- Follow their guides for configuring iOS and Android build settings
