@@ -4,7 +4,9 @@
 
 ####Server
 [Admin Interface](http://ttrestaurants.herokuapp.com/)
+
 [JSON API](http://ttrestaurants.herokuapp.com/restaurants)
+
 Ruby on Rails app with admin interface and JSON API. Administrators can enter information about restaurants and this data is pulled into the mobile app via the API.
 
 Built With:
@@ -16,6 +18,7 @@ Built With:
 
 ####Mobile App
 [Online App Demo](https://share.appgyver.com/?id=5345&hash=d349bc95f71feb3c50618dc0e3bfa2e681fc294ecd3638e7091f0daea79d67d4&device_type=iphone)
+
 Cross-platform (iOS and Android) mobile app that displays the information about restaurants pulled from the server.
 
 Built With:
