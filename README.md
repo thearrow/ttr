@@ -1,24 +1,29 @@
 # Tasting Table Restaurants
 
-## Contents
-- [Links (Our Temporary Development Setup)](https://github.com/thearrow/ttr#links)
-- [Deployment Instructions](https://github.com/thearrow/ttr#deployment)
-- [Local Development Setup](https://github.com/thearrow/ttr#development)
+## About
 
----
+####Server
+[Admin Interface](http://ttrestaurants.herokuapp.com/)
+[JSON API](http://ttrestaurants.herokuapp.com/restaurants)
+Ruby on Rails app with admin interface and JSON API. Administrators can enter information about restaurants and this data is pulled into the mobile app via the API.
 
-## Links
+Built With:
+- [rails_admin](https://github.com/sferik/rails_admin)
+- [geokit_rails](https://github.com/geokit/geokit-rails)
+- [memcached](http://memcached.org/)
+- [UrbanAirship](http://urbanairship.com/)
+- Hosted on [Heroku](http://heroku.com)
 
-#### Server (Ruby on Rails + MySQL on Heroku)
-- [Admin Login](http://ttrestaurants.herokuapp.com)
-  - Login with `username: admin@example.com  password: password`
-- [Heroku Login](https://id.heroku.com/login)
-- [UrbanAirship Login](https://go.urbanairship.com/accounts/login/)
-  - Limitations: 1,000,000 pushes / month for free
+####Mobile App
+[Online App Demo](https://share.appgyver.com/?id=5345&hash=d349bc95f71feb3c50618dc0e3bfa2e681fc294ecd3638e7091f0daea79d67d4&device_type=iphone)
+Cross-platform (iOS and Android) mobile app that displays the information about restaurants pulled from the server.
 
-#### Client (Steroids.js Hybrid Mobile App)
-- [Online Simulator](https://share.appgyver.com/?id=5345&hash=d349bc95f71feb3c50618dc0e3bfa2e681fc294ecd3638e7091f0daea79d67d4&device_type=iphone)
-- [AppGyver Cloud Services Login](https://cloud.appgyver.com/applications/5345)
+Built With:
+- [Steroids.js](http://www.appgyver.com/steroids)
+- [AngularJS](https://angularjs.org/)
+- [Topcoat](http://topcoat.io/)
+- [Hammer.js](http://eightmedia.github.io/hammer.js/)
+- [Google Maps API](https://developers.google.com/maps/)
 
 ---
 
